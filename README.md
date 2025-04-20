@@ -15,3 +15,26 @@ There's an example JSON file in the Project root named "JSON_TEMPLATE.json". The
 │   └── 📄 Page
 │   │   └── 🆓 Button: Button Name - Markdown Path
 ```
+
+An Example of valid navbar JSON is this:
+```JSON
+{
+  "Titles": [
+    {
+      "Title": "This is a title",
+      "Pages": {
+        "THIS IS A BUTTON": "this is the path to the markdown file linked with the button"
+      }
+    },
+    {
+      "Title": "Fruits",
+      "Pages": {
+        "Apple": "pages/apple.md",
+        "Banana": "pages/banana.md",
+        "Orange": "pages/orange.md"
+      }
+    }
+  ]
+}
+```
+This is a navbar containing 2 titles: *"This is a title"* and *"Fruits"*. The *"Fruits"* Title includes 3 Buttons, the first one is labelled *"Apple"* which links to a markdown file located at *"pages/apple.md"*.
