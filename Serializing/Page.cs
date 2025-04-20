@@ -24,15 +24,26 @@ namespace DocumentationGenerator.Serializing
                 Directory.CreateDirectory(directory);
             }
 
+            // Compile the page
+            string finalHTML = CompilePage(Title, MarkdownContents);
+
+            File.WriteAllText(path, finalHTML);
+        }
+
+        private string CompilePage(string title, string markdownContents)
+        {
             // Convert Markdown to HTML
             string bodyHTML = MarkdownUtil.ConvertMarkdownToHtml(MarkdownContents);
+
+            string navbarHTML = HTMLTemplates.NavbarTemplate;
 
             // Compile the HTML into a proper static page
             string finalHTML = HTMLTemplates.PageTemplate
                 .Replace("{{HTML_DOCUMENTATION}}", bodyHTML)
-                .Replace("{{DOCUMENTATION_TITLE}}", Title);
+                .Replace("{{DOCUMENTATION_TITLE}}", Title)
+                .Replace("{{NAVBAR}}", navbarHTML);
 
-            File.WriteAllText(path, finalHTML);
+            return finalHTML;
         }
     }
 }

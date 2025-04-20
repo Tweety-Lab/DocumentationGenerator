@@ -3,7 +3,7 @@
 ### Smaller
 Test Markdown Document
 
-*Italic Text*
+*Italic Text* 
 
 **Bold Text**
 
