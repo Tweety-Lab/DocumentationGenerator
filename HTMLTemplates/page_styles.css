@@ -4,7 +4,24 @@
     --p-font-size: 1.6rem
 }
 
+.content {
+    width: 100%;
+    background-color: var(--content-background)
+}
+
+.container {
+    max-width: 1140px;
+    margin: auto;
+}
+
+.side-by-side {
+    display: grid;
+    grid-template-columns: auto 3fr;
+}
+
+
 /* Typography */
+
 html {
     font-size: 62.5%;
     line-height: 1.5;
@@ -13,6 +30,10 @@ html {
 body {
     font-family: Arial, Helvetica, sans-serif;
     color: #333;
+}
+
+h1, h2, h3 {
+    margin: 0;
 }
 
 h1 {
@@ -75,22 +96,50 @@ p {
 }
 
 
-
-
-.nav {
-    width: 400px;
-    background-color: gold;
-}
-.content {
-    width: 100%;
-    background-color: var(--content-background)
-}
-
-.container {
-    max-width: 1140px;
-    margin: auto;
+/* NAV BAR */
+.nav-bar {
+    position: sticky;
+    height: 100vh; /* 100% of the viewport height */
+    background-color: #1b1b1b;
+    color: white;
+    padding: 0 3rem;
+    box-sizing: border-box;
+    min-width: 300px;
 }
 
-.side-by-side {
-    display: flex;
+.nav-bar ul {
+    list-style-type: none;
+    padding: 0;
 }
+
+.nav__list {
+    border-bottom: 1px solid #ccc;
+}
+
+.nav__list-item {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    padding: .4rem 0;
+    transition: all .15s;
+    transform-origin: center left;
+}
+
+.nav__title {
+    font-size: 2rem;
+    margin-top: 2rem;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav__list-item a:hover {
+    text-decoration: underline;
+    color: #d3d3d3;
+}
+
+.nav__list-item:hover {
+    transform: scale(1.1);
+}
+
