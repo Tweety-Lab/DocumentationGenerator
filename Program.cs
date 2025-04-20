@@ -1,6 +1,8 @@
-﻿using DocumentationGenerator.FileUtilities.HTML;
+﻿using DocumentationGenerator.Builder;
+using DocumentationGenerator.FileUtilities.HTML;
 using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
+using DocumentationGenerator.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,118 +13,26 @@ using System.Threading.Tasks;
 
 namespace DocumentationGenerator
 {
-    class Program
+    namespace DocumentationGenerator
     {
-        // Navbar
-        public static NavBar NavBar { get; set; }
-
-        static void Main(string[] args)
+        static class Program
         {
-            if (args.Length == 0)
-            {
-                Console.WriteLine("Usage: DocumentationGenerator.exe <JSON File> [-o OutputDirectory]");
-                return;
-            }
+            // Builder
+            public static DocumentationBuilder Builder { get; set; }
 
-            string outputPath = "Build";
-            string jsonFilePath = args[0];
-            string jsonDirectory = Path.GetDirectoryName(Path.GetFullPath(jsonFilePath));
-
-            // Parse command line arguments
-            for (int i = 1; i < args.Length; i++)
+            static void Main(string[] args)
             {
-                if (args[i] == "-o" && i + 1 < args.Length)
+                try
                 {
-                    outputPath = args[i + 1];
-                    i++;
+                    var (jsonFilePath, outputPath) = CommandLineParser.ParseArguments(args);
+
+                    Builder = new DocumentationBuilder(jsonFilePath, outputPath);
+                    Builder.BuildAllPages();
                 }
-            }
-
-            // Load and deserialize navbar
-            string jsonContent = File.ReadAllText(jsonFilePath);
-            NavBar = NavBarUtil.Deserialize(jsonContent);
-
-            // Ensure output directory exists
-            Directory.CreateDirectory(outputPath);
-
-            // Process all pages
-            foreach (NavTitle title in NavBar.Titles)
-            {
-                foreach (KeyValuePair<string, string> page in title.Pages)
+                catch (Exception ex)
                 {
-                    ProcessPage(page, jsonDirectory, outputPath);
+                    Console.WriteLine($"Error: {ex.Message}");
                 }
-            }
-
-            Console.WriteLine("Documentation generation complete!");
-        }
-
-        /// <summary>
-        /// Processes a single page.
-        /// </summary>
-        static void ProcessPage(KeyValuePair<string, string> page, string jsonDirectory, string outputPath)
-        {
-            string markdownFilePath = Path.Combine(jsonDirectory, page.Value);
-
-            if (!File.Exists(markdownFilePath))
-            {
-                Console.WriteLine($"Warning: Markdown file not found: {markdownFilePath}");
-                return;
-            }
-
-            var newPage = new Page
-            {
-                MarkdownContents = File.ReadAllText(markdownFilePath),
-                Title = page.Key
-            };
-
-            string relativeMarkdownPath = Path.GetRelativePath(jsonDirectory, markdownFilePath);
-            string fullOutputPath = Path.Combine(outputPath, Path.ChangeExtension(relativeMarkdownPath, ".html"));
-
-            // Ensure output directory exists
-            Directory.CreateDirectory(Path.GetDirectoryName(fullOutputPath));
-
-            // Write HTML file
-            newPage.WriteToFile(fullOutputPath);
-
-            // Copy resources requested by markdown (imgs, etc)
-            foreach (string resourcePath in MarkdownUtil.GetLinkedMDResourcePaths(newPage.MarkdownContents))
-            {
-                CopyResource(resourcePath, jsonDirectory, Path.GetDirectoryName(fullOutputPath));
-            }
-
-            // Copy resources requested by HTML (css, js, etc)
-            foreach (string resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
-            {
-                // Copy resource
-                CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
-            }
-
-            Console.WriteLine($"Generated: {fullOutputPath}");
-        }
-
-        /// <summary>
-        /// Copies a resource from the source directory to the destination directory.
-        /// </summary>
-        public static void CopyResource(string resourcePath, string sourceBaseDir, string destinationDir)
-        {
-            try
-            {
-                string fullSourcePath = Path.Combine(sourceBaseDir, resourcePath);
-                if (!File.Exists(fullSourcePath))
-                {
-                    Console.WriteLine($"Warning: Resource not found: {resourcePath}");
-                    return;
-                }
-
-                string fullDestPath = Path.Combine(destinationDir, resourcePath);
-                Directory.CreateDirectory(Path.GetDirectoryName(fullDestPath));
-                File.Copy(fullSourcePath, fullDestPath, overwrite: true);
-                Console.WriteLine($"Copied resource: {resourcePath}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error copying resource {resourcePath}: {ex.Message}");
             }
         }
     }

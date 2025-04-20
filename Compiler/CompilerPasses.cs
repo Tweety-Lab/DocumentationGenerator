@@ -1,4 +1,5 @@
-﻿using DocumentationGenerator.FileUtilities.HTML;
+﻿using DocumentationGenerator.DocumentationGenerator;
+using DocumentationGenerator.FileUtilities.HTML;
 using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
 using System;
@@ -29,7 +30,7 @@ namespace DocumentationGenerator.Compilation
     {
         public void Execute(Page page)
         {
-            string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.NavBar);
+            string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.Builder.NavBar);
             string compiledNavBar = HTMLUtil.ReplaceKeywordOutsideComments(
                 HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
 
