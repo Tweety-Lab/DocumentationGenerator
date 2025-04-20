@@ -30,20 +30,34 @@ namespace DocumentationGenerator.Serializing
         /// <returns></returns>
         public static string ConvertNavBarToHTML(NavBar navbar)
         {
-            string html = string.Empty;
+            var html = new StringBuilder();
+            html.Append("<ul>");
+
             foreach (var title in navbar.Titles)
             {
-                // Add the Title
-                html += $"<h3>{title.Title}</h3>";
+                // Start title list item
+                html.Append($"<li>{title.Title}");
 
-                // Add pages
+                // Start nested pages list
+                html.Append("<ul>");
+
+                // Add pages as nested list items
                 foreach (var page in title.Pages)
                 {
                     string relativeLink = page.Value.Replace(".md", ".html");
-                    html += $"<p><a href=\"{relativeLink}\">{page.Key}</a></p>";
+                    html.Append($"<li><a href=\"./{relativeLink}\">{page.Key}</a></li>");
                 }
+
+                // Close nested pages list
+                html.Append("</ul>");
+
+                // Close title list item
+                html.Append("</li>");
             }
-            return html;
+
+            // Close main list
+            html.Append("</ul>");
+            return html.ToString();
         }
     }
 }
