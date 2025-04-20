@@ -21,7 +21,7 @@ namespace DocumentationGenerator
                 {
                     Pages = new Dictionary<string, string>()
                     {
-                        {"test", "test_path" }
+                        {"THIS IS A BUTTON", "this is the path to the markdown file linked with the button" }
                     }
                 }
             };
@@ -33,7 +33,7 @@ namespace DocumentationGenerator
 
 
             // Write json to file
-            File.WriteAllText(".json.json", JsonSerializer.Serialize(navbar));
+            File.WriteAllText("../../../JSON_TEMPLATE.json", JsonSerializer.Serialize(navbar));
         }
     }
 }
