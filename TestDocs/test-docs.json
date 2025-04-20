@@ -1,0 +1,10 @@
+{
+  "Titles": [
+    {
+      "Title": "Test Title",
+      "Pages": {
+        "Test Button": "pages/test.md"
+      }
+    }
+  ]
+}
