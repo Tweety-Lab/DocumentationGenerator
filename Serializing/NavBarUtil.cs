@@ -45,7 +45,8 @@ namespace DocumentationGenerator.Serializing
                 foreach (var page in title.Pages)
                 {
                     string relativeLink = page.Value.Replace(".md", ".html");
-                    html.Append($"<li><a href=\"./{relativeLink}\">{page.Key}</a></li>");
+                    // root-relative
+                    html.Append($"<li><a href=\"/{relativeLink}\">{page.Key}</a></li>");
                 }
 
                 // Close nested pages list
