@@ -8,7 +8,7 @@ Test Markdown Document
 
 **Bold Text**
 
-```
+```CSharp
 Code Block
 ```
 

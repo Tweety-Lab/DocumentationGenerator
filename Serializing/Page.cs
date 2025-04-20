@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace DocumentationGenerator.Serializing
@@ -46,6 +47,9 @@ namespace DocumentationGenerator.Serializing
                 .Replace("{{HTML_DOCUMENTATION}}", bodyHTML)
                 .Replace("{{DOCUMENTATION_TITLE}}", Title)
                 .Replace("{{NAVBAR}}", navbarHTML);
+
+            // Final compilation pass to remove all comments
+            finalHTML = Regex.Replace(finalHTML, "<!--.*?-->", "", RegexOptions.Singleline);
 
             return finalHTML;
         }

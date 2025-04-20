@@ -75,8 +75,21 @@ namespace DocumentationGenerator
                     // Set the title
                     newPage.Title = page.Key;
 
-                    // Determine the full output path by combining the output directory and the HTML filename
-                    string fullOutputPath = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(page.Value) + ".html");
+                    // Get the path to the markdown file relative to the JSON directory
+                    string relativeMarkdownPath = Path.GetRelativePath(jsonDirectory, markdownFilePath).Replace('\\', '/');
+
+                    // Determine the full output path by combining the output directory and the relative markdown path
+                    string fullOutputPath = Path.Combine(outputPath, relativeMarkdownPath);
+
+                    // Ensure the directory for the relative markdown path exists
+                    string outputDirectory = Path.GetDirectoryName(fullOutputPath);
+                    if (!Directory.Exists(outputDirectory))
+                    {
+                        Directory.CreateDirectory(outputDirectory);
+                    }
+
+                    // Create the .html file path
+                    fullOutputPath = Path.ChangeExtension(fullOutputPath, ".html");
 
                     // Write to a .html file
                     newPage.WriteToFile(fullOutputPath);

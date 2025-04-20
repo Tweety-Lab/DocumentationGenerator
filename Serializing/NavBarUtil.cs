@@ -39,7 +39,8 @@ namespace DocumentationGenerator.Serializing
                 // Add pages
                 foreach (var page in title.Pages)
                 {
-                    html += $"<p><a href=\"{page.Value}\">{page.Key}</a></p>";
+                    string relativeLink = page.Value.Replace(".md", ".html");
+                    html += $"<p><a href=\"{relativeLink}\">{page.Key}</a></p>";
                 }
             }
             return html;
