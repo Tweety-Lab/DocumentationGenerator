@@ -22,5 +22,27 @@ namespace DocumentationGenerator.Serializing
                 PropertyNameCaseInsensitive = true
             });
         }
+
+        /// <summary>
+        /// Convert a NavBar object to HTML
+        /// </summary>
+        /// <param name="navbar"></param>
+        /// <returns></returns>
+        public static string ConvertNavBarToHTML(NavBar navbar)
+        {
+            string html = string.Empty;
+            foreach (var title in navbar.Titles)
+            {
+                // Add the Title
+                html += $"<h3>{title.Title}</h3>";
+
+                // Add pages
+                foreach (var page in title.Pages)
+                {
+                    html += $"<p><a href=\"{page.Value}\">{page.Key}</a></p>";
+                }
+            }
+            return html;
+        }
     }
 }

@@ -12,6 +12,10 @@ namespace DocumentationGenerator
 {
     class Program
     {
+        /// <summary>
+        /// The NavBar.
+        /// </summary>
+        public static NavBar NavBar { get; set; }
         static void Main(string[] args)
         {
             // Default output directory
@@ -40,7 +44,7 @@ namespace DocumentationGenerator
 
             // Parse the JSON into a NavBar
             string jsonContent = File.ReadAllText(jsonFilePath);
-            NavBar navbar = NavBarUtil.Deserialize(jsonContent);
+            NavBar = NavBarUtil.Deserialize(jsonContent);
 
             // Ensure output directory exists
             if (!Directory.Exists(outputPath))
@@ -48,7 +52,7 @@ namespace DocumentationGenerator
                 Directory.CreateDirectory(outputPath);
             }
 
-            foreach (NavTitle title in navbar.Titles)
+            foreach (NavTitle title in NavBar.Titles)
             {
                 foreach (KeyValuePair<string, string> page in title.Pages)
                 {
@@ -81,7 +85,7 @@ namespace DocumentationGenerator
                 }
             }
 
-            Console.WriteLine(navbar.Titles[0].Title);
+            Console.WriteLine(NavBar.Titles[0].Title);
         }
     }
 }

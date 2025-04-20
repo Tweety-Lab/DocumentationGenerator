@@ -25,17 +25,21 @@ namespace DocumentationGenerator.Serializing
             }
 
             // Compile the page
-            string finalHTML = CompilePage(Title, MarkdownContents);
+            string finalHTML = CompilePage();
 
             File.WriteAllText(path, finalHTML);
         }
 
-        private string CompilePage(string title, string markdownContents)
+        private string CompilePage()
         {
             // Convert Markdown to HTML
-            string bodyHTML = MarkdownUtil.ConvertMarkdownToHtml(MarkdownContents);
+            string bodyHTML = MarkdownUtil.ConvertMarkdownToHTML(MarkdownContents);
 
-            string navbarHTML = HTMLTemplates.NavbarTemplate;
+            string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.NavBar);
+
+            // Compile the NavBar HTML into a proper static page
+            navbarHTML = HTMLTemplates.NavBarTemplate
+                .Replace("{{NAVBAR_CONTENT}}", navbarHTML);
 
             // Compile the HTML into a proper static page
             string finalHTML = HTMLTemplates.PageTemplate
