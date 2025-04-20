@@ -3,23 +3,35 @@
  the compiler replaces {{DOCUMENTATION_TITLE}} with the name of the Documentation Page. -->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>{{DOCUMENTATION_TITLE}}</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f5f5f5;
-            color: #333;
-        }
-        h1 {
-            color: #007acc;
-        }
-    </style>
-</head>
-<body>
-    <h1>Example Page HTML Template</h1>
+    <link rel="stylesheet" href="page_styles.css" />
+  </head>
+  <body>
+    <div class="side-by-side">
+      <nav class="nav"></nav>
+      <section class="content">
+        <div class="container">
+          <h1>Example Page HTML Template</h1>
+          <p class="subtitle">
+            The C# API Provides easy-to-use methods of interacting with the
+            Developer Console.
+          </p>
+          <h2>Logging to the Console</h2>
+          <p>
+            The Console can be written to via the
+            <code class="inline-code">DeveloperConsole</code> class. This class
+            provides three Logging methods:
+            <code class="inline-code">Msg()</code>, which logs a simple white
+            message; <code class="inline-code">Warning()</code>, which logs a
+            yellow message; and <code class="inline-code">Error()</code> which
+            logs a red message.
+          </p>
+        </div>
+      </section>
+    </div>
+
     {{HTML_DOCUMENTATION}}
-</body>
+  </body>
 </html>

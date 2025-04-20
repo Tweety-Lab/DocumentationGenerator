@@ -1,0 +1,64 @@
+:root {
+    --content-background: #F9F6EE;
+    --inline-code-color: #e74c3c
+}
+
+/* Typography */
+html {
+    font-size: 62.5%;
+    line-height: 1.5;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+}
+
+h1 {
+    font-size: 3.815rem;
+}
+
+h2 {
+    font-size: 3.052rem;
+}
+
+h3 {
+    font-size: 2.441rem;
+}
+
+p {
+    font-size: 1.6rem;
+    width: 70ch;
+}
+
+
+img {
+    width: 100%;
+}
+
+.inline-code {
+    color: var(--inline-code-color);
+    background-color: whitesmoke;
+    border: 1px solid #999;
+    padding: .1rem .5rem;
+}
+
+
+
+.nav {
+    width: 400px;
+    background-color: gold;
+}
+.content {
+    width: 100%;
+    background-color: var(--content-background)
+}
+
+.container {
+    max-width: 1140px;
+    margin: auto;
+}
+
+.side-by-side {
+    display: flex;
+}
