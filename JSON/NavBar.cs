@@ -14,6 +14,7 @@ namespace DocumentationGenerator.JSON
 
     public struct NavTitle
     {
+        public string Title { get; set; }
         public Dictionary<string, string> Pages { get; set; }
     }
 }

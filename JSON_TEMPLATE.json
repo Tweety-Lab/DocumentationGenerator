@@ -1,6 +1,7 @@
 {
   "Titles": [
     {
+      "Title": "This is a title",
       "Pages": {
         "THIS IS A BUTTON": "this is the path to the markdown file linked with the button"
       }

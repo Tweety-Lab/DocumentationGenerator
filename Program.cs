@@ -19,6 +19,7 @@ namespace DocumentationGenerator
             {
                 new NavTitle()
                 {
+                    Title = "This is a title",
                     Pages = new Dictionary<string, string>()
                     {
                         {"THIS IS A BUTTON", "this is the path to the markdown file linked with the button" }
