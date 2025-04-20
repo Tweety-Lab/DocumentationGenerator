@@ -5,6 +5,14 @@
       "Pages": {
         "THIS IS A BUTTON": "this is the path to the markdown file linked with the button"
       }
+    },
+    {
+      "Title": "Fruits",
+      "Pages": {
+        "Apple": "pages/apple.md",
+        "Banana": "pages/banana.md",
+        "Orange": "pages/orange.md"
+      }
     }
   ]
 }

@@ -24,6 +24,17 @@ namespace DocumentationGenerator
                     {
                         {"THIS IS A BUTTON", "this is the path to the markdown file linked with the button" }
                     }
+                },
+
+                new NavTitle()
+                {
+                    Title = "Fruits",
+                    Pages = new Dictionary<string, string>()
+                    {
+                        {"Apple", "pages/apple.md" },
+                        {"Banana", "pages/banana.md" },
+                        {"Orange", "pages/orange.md" }
+                    }
                 }
             };
 
