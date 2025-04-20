@@ -1,6 +1,7 @@
 :root {
-    --content-background: #F9F6EE;
-    --inline-code-color: #e74c3c
+    --content-background: #FAF9F6;
+    --inline-code-color: #e74c3c;
+    --p-font-size: 1.6rem
 }
 
 /* Typography */
@@ -27,21 +28,52 @@ h3 {
 }
 
 p {
-    font-size: 1.6rem;
+    font-size: var(--p-font-size);
     width: 70ch;
-}
-
-
-img {
-    width: 100%;
+    margin: 0;
 }
 
 .inline-code {
-    color: var(--inline-code-color);
     background-color: whitesmoke;
     border: 1px solid #999;
     padding: .1rem .5rem;
+    font-family: monospace;
 }
+
+.inline-code--coloured {
+    color: var(--inline-code-color);
+
+}
+
+.subtitle {
+    font-size: calc(var(--p-font-size) * 1.05);
+    font-style: italic;
+}
+
+
+/* WARNING */
+.warning {
+    margin: 4rem 0;
+}
+.warning__body {
+    background-color: #ffedcc;
+    color: black;
+    padding: 1rem 2rem;
+}
+
+.warning__header {
+    color: white;
+    background-color: #f0b37e;
+    font-size: 2.1rem;
+    padding: 1rem 2rem;
+}
+
+.warning__heading {
+    display: inline-block;
+    font-size: 2.1rem;
+    margin: 0;
+}
+
 
 
 
