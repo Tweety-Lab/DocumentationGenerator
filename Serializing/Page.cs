@@ -53,5 +53,44 @@ namespace DocumentationGenerator.Serializing
 
             return finalHTML;
         }
+
+        /// <summary>
+        /// Get all linked resource paths in the markdown
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetLinkedResourcePaths()
+        {
+            var paths = new List<string>();
+
+            // Regex pattern to match markdown links: [text](path "optional title")
+            var linkMatches = Regex.Matches(MarkdownContents, @"\[.*?\]\((.*?)(?:\s+[""'].*?[""'])?\)");
+
+            foreach (Match match in linkMatches)
+            {
+                if (match.Groups.Count < 2) continue;
+
+                string rawPath = match.Groups[1].Value.Trim();
+
+                // Skip empty paths, anchors (#), and external URLs
+                if (string.IsNullOrWhiteSpace(rawPath) ||
+                    rawPath.StartsWith("#") ||
+                    rawPath.StartsWith("http://") ||
+                    rawPath.StartsWith("https://") ||
+                    rawPath.StartsWith("mailto:"))
+                {
+                    continue;
+                }
+
+                // Remove query strings and anchors from the path
+                var cleanPath = rawPath.Split(new[] { '#', '?' }, 2)[0];
+
+                if (!string.IsNullOrWhiteSpace(cleanPath))
+                {
+                    paths.Add(cleanPath);
+                }
+            }
+
+            return paths.Distinct().ToList(); // Return unique paths
+        }
     }
 }
