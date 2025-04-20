@@ -10,7 +10,7 @@ namespace DocumentationGenerator.Markdown
 {
     public static class MarkdownUtil
     {
-        public static string ConvertMarkdownToHtml(string markdown)
+        public static string ConvertMarkdownToHTML(string markdown)
         {
             // Parse to markdown
             MarkdownDocument document = Markdig.Markdown.Parse(markdown);

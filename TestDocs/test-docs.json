@@ -1,9 +1,9 @@
 {
   "Titles": [
     {
-      "Title": "Test Title",
+      "Title": "Testing",
       "Pages": {
-        "Test Button": "pages/test.md"
+        "Test Page": "pages/test.md"
       }
     }
   ]

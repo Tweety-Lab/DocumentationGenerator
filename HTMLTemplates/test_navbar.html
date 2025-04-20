@@ -1,0 +1,42 @@
+<!-- This is an example of how a Navigation BarHTML Template works.
+ This doesn't need to have metadata or be declared as HTML as its inserted into a page during compilation. -->
+ <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+
+            /* Push the body content to the right */
+            padding-left: 130px;
+        }
+    
+        .navigation-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100vh; /* 100% of the viewport height */
+            background-color: #1b1b1b;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+    
+        .navigation-bar a {
+            color: white;
+            text-decoration: none;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+    
+        .navigation-bar a:hover {
+            text-decoration: underline;
+        }
+</style>
+<div class="navigation-bar">
+    {{NAVBAR_CONTENT}}
+</div>
+ 
