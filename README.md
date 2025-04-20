@@ -6,4 +6,12 @@ Open DocumentationGenerator.sln
 Right Click "DocumentationGenerator" -> Build
 
 # Reading the JSON Template
-There's an example JSON file in the Project root named "JSON_TEMPLATE.json".
+There's an example JSON file in the Project root named "JSON_TEMPLATE.json". The JSON defines a Navbar that stores data in a tree like format:
+
+```
+📂 JSON Root
+├── 📝 Titles
+│   ├── 📄 Title: Title Name
+│   └── 📄 Page
+│   │   └── 🆓 Button: Button Name - Markdown Path
+```
