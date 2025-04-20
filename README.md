@@ -1,3 +1,8 @@
+# Testing
+In the Project root there's a `build.bat` file, this file builds the project and then uses it to generate documentation for the **Test Documentation located in "TestDocs"**. This outputs the built documentation to "Build".
+
+**If the build.bat script doesn't work, make sure you have .NET installed!**
+
 # Compiling
 Install VS2022 With C# Support
 
