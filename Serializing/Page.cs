@@ -1,5 +1,6 @@
 ﻿using DocumentationGenerator.HTML;
 using DocumentationGenerator.Markdown;
+using DocumentationGenerator.Compilation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,15 @@ namespace DocumentationGenerator.Serializing
     /// </summary>
     public class Page
     {
+        // All compiler passes to run
+        private static readonly List<ICompilerPass> _compilerPasses = new List<ICompilerPass>
+        {
+            new MarkdownConversionPass(),
+            new NavBarGenerationPass(),
+            new TemplateProcessingPass(),
+            new CommentRemovalPass()
+        };
+
         public string Title { get; set; }
         public string MarkdownContents { get; set; }
         public string HTMLContents { get; set; }
@@ -34,31 +44,24 @@ namespace DocumentationGenerator.Serializing
         }
 
         /// <summary>
-        /// Compile the page into HTML.
+        /// Compile the page.
         /// </summary>
         public void CompilePage()
         {
-            // Convert Markdown to HTML
-            string bodyHTML = MarkdownUtil.ConvertMarkdownToHTML(MarkdownContents);
-            string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.NavBar);
+            // Initialize HTML contents with markdown
+            HTMLContents ??= MarkdownContents;
 
-            // Compile the NavBar HTML into a proper static page
-            string compiledNavBar = HTMLUtil.ReplaceKeywordOutsideComments(
-                HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
+            // Apply compiler passes
+            foreach (var pass in _compilerPasses)
+            {
+                pass.Execute(this);
+            }
+        }
 
-            // Prepare the template with NavBar
-            string compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
-                HTMLTemplates.PageTemplate, "{{NAVBAR}}", compiledNavBar);
-
-            // Replace the rest of the placeholders outside of HTML comments
-            // We remove comments in a later pass anyway but we do this for safety
-            compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(compiledHTML, "{{HTML_DOCUMENTATION}}", bodyHTML);
-            compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(compiledHTML, "{{DOCUMENTATION_TITLE}}", Title);
-
-            // Final compilation pass to remove all comments from HTML content
-            compiledHTML = Regex.Replace(compiledHTML, "<!--.*?-->", "", RegexOptions.Singleline);
-
-            HTMLContents = compiledHTML;
+        // Allow registering compiler passes
+        public static void RegisterCompilerPass(ICompilerPass pass)
+        {
+            _compilerPasses.Add(pass);
         }
     }
 }

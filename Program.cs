@@ -13,6 +13,7 @@ namespace DocumentationGenerator
 {
     class Program
     {
+        // Navbar
         public static NavBar NavBar { get; set; }
 
         static void Main(string[] args)
@@ -93,6 +94,7 @@ namespace DocumentationGenerator
             // Copy resources requested by HTML (css, js, etc)
             foreach (string resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
             {
+                // Copy resource
                 CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
             }
 
