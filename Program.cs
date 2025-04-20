@@ -68,6 +68,9 @@ namespace DocumentationGenerator
                     // Set markdown contents
                     newPage.MarkdownContents = File.ReadAllText(markdownFilePath);
 
+                    // Set the title
+                    newPage.Title = page.Key;
+
                     // Determine the full output path by combining the output directory and the HTML filename
                     string fullOutputPath = Path.Combine(outputPath, Path.GetFileNameWithoutExtension(page.Value) + ".html");
 

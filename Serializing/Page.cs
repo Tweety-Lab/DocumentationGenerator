@@ -12,6 +12,7 @@ namespace DocumentationGenerator.Serializing
     /// </summary>
     public class Page
     {
+        public string Title { get; set; }
         public string MarkdownContents { get; set; }
 
         public void WriteToFile(string path)
@@ -22,14 +23,16 @@ namespace DocumentationGenerator.Serializing
             {
                 Directory.CreateDirectory(directory);
             }
-            
+
             // Convert Markdown to HTML
-            string HTML = MarkdownUtil.ConvertMarkdownToHtml(MarkdownContents);
+            string bodyHTML = MarkdownUtil.ConvertMarkdownToHtml(MarkdownContents);
 
-            // Load the HTML into the page template
-            HTML = HTMLTemplates.PageTemplate.Replace("{{HTML_DOCUMENTATION}}", HTML);
+            // Compile the HTML into a proper static page
+            string finalHTML = HTMLTemplates.PageTemplate
+                .Replace("{{HTML_DOCUMENTATION}}", bodyHTML)
+                .Replace("{{DOCUMENTATION_TITLE}}", Title);
 
-            File.WriteAllText(path, HTML);
+            File.WriteAllText(path, finalHTML);
         }
     }
 }
