@@ -15,37 +15,6 @@ namespace DocumentationGenerator
         static void Main(string[] args)
         {
 
-            List<NavTitle> navTitles = new List<NavTitle>()
-            {
-                new NavTitle()
-                {
-                    Title = "This is a title",
-                    Pages = new Dictionary<string, string>()
-                    {
-                        {"THIS IS A BUTTON", "this is the path to the markdown file linked with the button" }
-                    }
-                },
-
-                new NavTitle()
-                {
-                    Title = "Fruits",
-                    Pages = new Dictionary<string, string>()
-                    {
-                        {"Apple", "pages/apple.md" },
-                        {"Banana", "pages/banana.md" },
-                        {"Orange", "pages/orange.md" }
-                    }
-                }
-            };
-
-            NavBar navbar = new NavBar()
-            {
-                Titles = navTitles
-            };
-
-
-            // Write json to file
-            File.WriteAllText("../../../JSON_TEMPLATE.json", JsonSerializer.Serialize(navbar));
         }
     }
 }
