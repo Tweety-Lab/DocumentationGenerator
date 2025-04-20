@@ -1,4 +1,5 @@
-﻿using DocumentationGenerator.Markdown;
+﻿using DocumentationGenerator.HTML;
+using DocumentationGenerator.Markdown;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,23 +40,25 @@ namespace DocumentationGenerator.Serializing
         {
             // Convert Markdown to HTML
             string bodyHTML = MarkdownUtil.ConvertMarkdownToHTML(MarkdownContents);
-
             string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.NavBar);
 
             // Compile the NavBar HTML into a proper static page
-            navbarHTML = HTMLTemplates.NavBarTemplate
-                .Replace("{{NAVBAR_CONTENT}}", navbarHTML);
+            string compiledNavBar = HTMLUtil.ReplaceKeywordOutsideComments(
+                HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
 
-            // Compile the HTML into a proper static page
-            string finalHTML = HTMLTemplates.PageTemplate
-                .Replace("{{HTML_DOCUMENTATION}}", bodyHTML)
-                .Replace("{{DOCUMENTATION_TITLE}}", Title)
-                .Replace("{{NAVBAR}}", navbarHTML);
+            // Prepare the template with NavBar
+            string compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
+                HTMLTemplates.PageTemplate, "{{NAVBAR}}", compiledNavBar);
 
-            // Final compilation pass to remove all comments
-            finalHTML = Regex.Replace(finalHTML, "<!--.*?-->", "", RegexOptions.Singleline);
+            // Replace the rest of the placeholders outside of HTML comments
+            // We remove comments in a later pass anyway but we do this for safety
+            compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(compiledHTML, "{{HTML_DOCUMENTATION}}", bodyHTML);
+            compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(compiledHTML, "{{DOCUMENTATION_TITLE}}", Title);
 
-            HTMLContents = finalHTML;
+            // Final compilation pass to remove all comments from HTML content
+            compiledHTML = Regex.Replace(compiledHTML, "<!--.*?-->", "", RegexOptions.Singleline);
+
+            HTMLContents = compiledHTML;
         }
     }
 }

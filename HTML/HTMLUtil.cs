@@ -38,5 +38,24 @@ namespace DocumentationGenerator.HTML
 
             return styleSheetLinks.Concat(scriptLinks).ToList();
         }
+
+        /// <summary>
+        /// Replaces all occurrences of a keyword outside HTML comments
+        /// </summary>
+        public static string ReplaceKeywordOutsideComments(string html, string keyword, string replacement)
+        {
+            return Regex.Replace(html, @"(<!--.*?-->)|(" + Regex.Escape(keyword) + ")",
+                m =>
+                {
+                    // If this is a comment, leave it as-is
+                    if (m.Groups[1].Success)
+                        return m.Value;
+
+                    // Otherwise, replace the placeholder
+                    else
+                        return replacement;
+                },
+                RegexOptions.Singleline);
+        }
     }
 }
