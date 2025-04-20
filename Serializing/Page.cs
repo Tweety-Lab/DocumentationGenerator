@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DocumentationGenerator.Markdown;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace DocumentationGenerator.Serializing
                 Directory.CreateDirectory(directory);
             }
 
-            File.WriteAllText(path, MarkdownContents);
+            File.WriteAllText(path, MarkdownUtil.ConvertMarkdownToHtml(MarkdownContents));
         }
     }
 }
