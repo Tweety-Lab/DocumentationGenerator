@@ -1,4 +1,6 @@
-﻿using DocumentationGenerator.Serializing;
+﻿using DocumentationGenerator.HTML;
+using DocumentationGenerator.Markdown;
+using DocumentationGenerator.Serializing;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -82,10 +84,16 @@ namespace DocumentationGenerator
             // Write HTML file
             newPage.WriteToFile(fullOutputPath);
 
-            // Copy linked resources
-            foreach (string resourcePath in newPage.GetLinkedResourcePaths())
+            // Copy resources requested by markdown (imgs, etc)
+            foreach (string resourcePath in MarkdownUtil.GetLinkedMDResourcePaths(newPage.MarkdownContents))
             {
                 CopyResource(resourcePath, jsonDirectory, Path.GetDirectoryName(fullOutputPath));
+            }
+
+            // Copy resources requested by HTML (css, js, etc)
+            foreach (string resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
+            {
+                CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
             }
 
             Console.WriteLine($"Generated: {fullOutputPath}");
@@ -94,7 +102,7 @@ namespace DocumentationGenerator
         /// <summary>
         /// Copies a resource from the source directory to the destination directory.
         /// </summary>
-        static void CopyResource(string resourcePath, string sourceBaseDir, string destinationDir)
+        public static void CopyResource(string resourcePath, string sourceBaseDir, string destinationDir)
         {
             try
             {

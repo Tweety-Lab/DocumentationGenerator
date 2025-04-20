@@ -8,7 +8,8 @@ namespace DocumentationGenerator.Markdown
 {
     public static class HTMLTemplates
     {
-        public static string PageTemplate = File.ReadAllText("HTMLTemplates/test_page.html");
-        public static string NavBarTemplate = File.ReadAllText("HTMLTemplates/test_navbar.html");
+        public static string TemplatePath { get; set; } = "HTMLTemplates";
+        public static string PageTemplate { get; set; } = File.ReadAllText("HTMLTemplates/test_page.html");
+        public static string NavBarTemplate { get; set; } = File.ReadAllText("HTMLTemplates/test_navbar.html");
     }
 }
