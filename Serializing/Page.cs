@@ -1,6 +1,4 @@
-﻿using DocumentationGenerator.HTML;
-using DocumentationGenerator.Markdown;
-using DocumentationGenerator.Compilation;
+﻿using DocumentationGenerator.Compilation;
 using System;
 using System.Collections.Generic;
 using System.Linq;

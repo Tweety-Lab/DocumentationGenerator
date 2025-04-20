@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace DocumentationGenerator.HTML
+namespace DocumentationGenerator.FileUtilities.HTML
 {
     public static class HTMLUtil
     {

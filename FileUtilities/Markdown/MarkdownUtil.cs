@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Markdig;
 using Markdig.Syntax;
 
-namespace DocumentationGenerator.Markdown
+namespace DocumentationGenerator.FileUtilities.Markdown
 {
     public static class MarkdownUtil
     {

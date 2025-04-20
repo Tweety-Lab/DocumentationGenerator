@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DocumentationGenerator.Markdown
+namespace DocumentationGenerator.FileUtilities.HTML
 {
     public static class HTMLTemplates
     {
