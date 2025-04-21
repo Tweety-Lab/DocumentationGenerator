@@ -10,13 +10,13 @@ namespace DocumentationGenerator.Serializing;
 public class Page
 {
     // All compiler passes to run
-    private static readonly List<ICompilerPass> CompilerPasses = new()
-    {
+    public static readonly List<ICompilerPass> CompilerPasses =
+    [
         new MarkdownConversionPass(),
         new NavBarGenerationPass(),
         new CompilerVariablePass(),
         new CommentRemovalPass()
-    };
+    ];
 
     public string Title { get; set; }
     public string MarkdownContents { get; set; }
@@ -28,29 +28,15 @@ public class Page
 
     public void WriteToFile(string path)
     {
+        // Get directory
         var directory = Path.GetDirectoryName(path);
         if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory)) Directory.CreateDirectory(directory);
 
+        // Compile Page if it's not already compiled
         if (HTMLContents == null)
-            CompilePage();
+            Compiler.CompilePage(this);
 
+        // Write to file
         FileUtil.SafeWriteAllText(path, HTMLContents);
-    }
-
-
-    /// <summary>
-    ///     Compile the page.
-    /// </summary>
-    public void CompilePage()
-    {
-        HTMLDocumentationContents ??= MarkdownContents;
-
-        // Apply compiler passes
-        foreach (var pass in CompilerPasses) pass.Execute(this);
-    }
-
-    public static void RegisterCompilerPass(ICompilerPass pass)
-    {
-        CompilerPasses.Add(pass);
     }
 }
