@@ -1,7 +1,4 @@
-﻿using DocGenServer.LocalServer;
-using System;
-
-namespace DocumentationGenerator.Utilities
+﻿namespace DocumentationGenerator.Utilities
 {
     public class CommandLineOptions
     {

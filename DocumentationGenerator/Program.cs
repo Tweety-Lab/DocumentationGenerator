@@ -1,7 +1,5 @@
 ﻿using DocumentationGenerator.Builder;
 using DocumentationGenerator.Utilities;
-using DocGenServer.LocalServer;
-using System;
 using DocumentationGenerator.MarkdownServer;
 
 namespace DocumentationGenerator

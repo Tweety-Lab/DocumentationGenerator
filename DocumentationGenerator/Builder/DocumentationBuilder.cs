@@ -1,9 +1,6 @@
 ﻿using DocumentationGenerator.FileUtilities.HTML;
 using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
-using System;
-using System.Collections.Generic;
-using System.IO;
 
 namespace DocumentationGenerator.Builder
 {
