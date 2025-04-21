@@ -121,13 +121,14 @@ p {
 
 /* NAV BAR */
 .nav-bar {
-    position: sticky;
-    height: fit-content;
+    /* position: sticky; */
     background-color: var(--nav-bg-colour);
     color: var(--nav-text-colour);
-    padding: 0 3rem 3rem; /*0 top padding, 3rem right and left, 3rem bottom */
     box-sizing: border-box;
-    min-width: 22rem;
+    /* min-width: 22rem; */
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .nav-bar ul {
@@ -137,6 +138,8 @@ p {
 
 .nav__list {
     border-bottom: 1px solid var(--nav-bottom-line-colour);
+    width: 100%;
+    margin: 0;
 }
 
 .nav__list-item {
@@ -144,7 +147,6 @@ p {
     font-size: 1.5rem;
     padding: .4rem 0;
     transition: all .15s;
-    transform-origin: center left;
 }
 
 .nav__title {
@@ -152,6 +154,11 @@ p {
     margin-top: 2rem;
 }
 
+.nav__logo {
+    font-size: 1.5rem;
+    height: 100%;
+    margin: auto 0.5rem;
+}
 .nav-bar a {
     color: var(--nav-text-colour);
     text-decoration: none;
@@ -166,10 +173,22 @@ p {
     transform: scale(1.1);
 }
 
+.nav__menu-icon {
+    fill: #fff;
+    width: 40px;
+    height: 40px;
+}
+
 @media screen and (min-width: 768px) {
     .nav-bar {
         height: 100vh;
+    /* padding: 0 3rem 3rem; 0 top padding, 3rem right and left, 3rem bottom */
+
     }
+}
+
+.menu-and-list {
+    width: 100%;
 }
 
 /* Collapsibles - for NavBar */
@@ -178,6 +197,7 @@ p {
     overflow: hidden;
     transition: all 0.3s;
     opacity: 0;
+    width: 100%;
 }
 
 .collapsible--expanded .nav__toggler {
