@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DocGenServer\DocGenServer.csproj" />
+    <ProjectReference Include="..\DocGenServer\Server.csproj" />
   </ItemGroup>
 
 </Project>

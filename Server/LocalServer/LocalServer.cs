@@ -5,12 +5,12 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DocGenServer.LocalServer
+namespace Server
 {
     /// <summary>
     /// Manages the lifecycle of a local web-server.
     /// </summary>
-    public class Server
+    public class LocalServer
     {
         // The Directory to read files from
         public string Directory { get; set; }
@@ -21,7 +21,7 @@ namespace DocGenServer.LocalServer
         // HttpListener instance
         private HttpListener _listener;
 
-        public Server(string directory, int port = 9999)
+        public LocalServer(string directory, int port = 9999)
         {
             if (!System.IO.Directory.Exists(directory))
             {
