@@ -1,4 +1,4 @@
-﻿namespace DocumentationGenerator.Utilities
+﻿namespace DocumentationGenerator.FileUtilities
 {
     public class CommandLineOptions
     {

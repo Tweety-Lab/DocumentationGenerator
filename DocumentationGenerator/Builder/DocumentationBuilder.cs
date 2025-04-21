@@ -1,6 +1,7 @@
 ﻿using DocumentationGenerator.FileUtilities.HTML;
 using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
+using DocumentationGenerator.Utilities;
 
 namespace DocumentationGenerator.Builder
 {
@@ -48,7 +49,7 @@ namespace DocumentationGenerator.Builder
 
             var newPage = new Page
             {
-                MarkdownContents = File.ReadAllText(markdownFilePath),
+                MarkdownContents = FileUtil.SafeReadAllText(markdownFilePath),
                 Title = page.Key
             };
 

@@ -1,5 +1,6 @@
 ﻿using DocumentationGenerator.Builder;
 using Server;
+using Server.HotReloading;
 
 namespace DocumentationGenerator.MarkdownServer
 {
@@ -51,6 +52,10 @@ namespace DocumentationGenerator.MarkdownServer
 
             // Start a local server for the built site
             server = new LocalServer(outputPath, Port);
+
+            // Build site when files change
+            var hotReload = new HotReload(System.IO.Directory.GetCurrentDirectory());
+            hotReload.RegisterCallback(filePath => builder.BuildAllPages());
 
             // Open server and block until closed
             server.OpenServer(true);
