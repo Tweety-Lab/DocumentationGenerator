@@ -1,2 +1,2 @@
 dotnet build DocumentationGenerator.sln
-"DocumentationGenerator/bin/Debug/net9.0/DocumentationGenerator.exe" "TestDocs/test-docs.json"
+"DocumentationGenerator/bin/Debug/net9.0/DocumentationGenerator.exe" "TestDocs"

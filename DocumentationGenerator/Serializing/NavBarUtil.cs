@@ -31,17 +31,17 @@ namespace DocumentationGenerator.Serializing
             foreach (var title in navbar.Titles)
             {
                 // Start title list item
-                html.Append($"<li>{title.Title}");
+                html.Append($"<li class=\"nav__title\">{title.Title}");
 
                 // Start nested pages list
-                html.Append("<ul>");
+                html.Append("<ul class=\"nav__list\">");
 
                 // Add pages as nested list items
                 foreach (var page in title.Pages)
                 {
                     string relativeLink = page.Value.Replace(".md", ".html");
                     // root-relative
-                    html.Append($"<li><a href=\"/{relativeLink}\">{page.Key}</a></li>");
+                    html.Append($"<li class=\"nav__list-item\"><a href=\"/{relativeLink}\">{page.Key}</a></li>");
                 }
 
                 // Close nested pages list
