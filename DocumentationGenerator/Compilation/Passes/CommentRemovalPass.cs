@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using DocumentationGenerator.Serializing;
 
-namespace DocumentationGenerator.Compilation;
+namespace DocumentationGenerator.Compilation.Passes;
 
 /// <summary>
 /// Removes all comments from the page.

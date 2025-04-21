@@ -1,7 +1,7 @@
 ﻿using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
 
-namespace DocumentationGenerator.Compilation;
+namespace DocumentationGenerator.Compilation.Passes;
 
 /// <summary>
 /// Converts Markdown to HTML.

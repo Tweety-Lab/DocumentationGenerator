@@ -1,4 +1,5 @@
 ﻿using DocumentationGenerator.Compilation;
+using DocumentationGenerator.Compilation.Passes;
 using DocumentationGenerator.Utilities;
 
 namespace DocumentationGenerator.Serializing;

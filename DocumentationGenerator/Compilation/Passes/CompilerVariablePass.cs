@@ -1,7 +1,7 @@
 ﻿using DocumentationGenerator.FileUtilities.HTML;
 using DocumentationGenerator.Serializing;
 
-namespace DocumentationGenerator.Compilation;
+namespace DocumentationGenerator.Compilation.Passes;
 
 /// <summary>
 ///     Add Compiler Variables to the page.
