@@ -1,64 +1,63 @@
-﻿using DocumentationGenerator.FileUtilities.HTML;
+﻿using System.Text.RegularExpressions;
+using DocumentationGenerator.FileUtilities.HTML;
 using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
-using System.Text.RegularExpressions;
 
-namespace DocumentationGenerator.Compilation
+namespace DocumentationGenerator.Compilation;
+
+/// <summary>
+///     Converts Markdown to HTML.
+/// </summary>
+public class MarkdownConversionPass : ICompilerPass
 {
-    /// <summary>
-    /// Converts Markdown to HTML.
-    /// </summary>
-    public class MarkdownConversionPass : ICompilerPass
+    public void Execute(Page page)
     {
-        public void Execute(Page page)
-        {
-            page.HTMLDocumentationContents = MarkdownUtil.ConvertMarkdownToHTML(page.MarkdownContents);
-        }
+        page.HTMLDocumentationContents = MarkdownUtil.ConvertMarkdownToHTML(page.MarkdownContents);
     }
+}
 
-    /// <summary>
-    /// Compiles the Navigation Bar.
-    /// </summary>
-    public class NavBarGenerationPass : ICompilerPass
+/// <summary>
+///     Compiles the Navigation Bar.
+/// </summary>
+public class NavBarGenerationPass : ICompilerPass
+{
+    public void Execute(Page page)
     {
-        public void Execute(Page page)
-        {
-            string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.Builder.NavBar);
-            string compiledNavBar = HTMLUtil.ReplaceKeyword(
-                HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
+        var navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.Builder.NavBar);
+        var compiledNavBar = HTMLUtil.ReplaceKeyword(
+            HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
 
-            page.HTMLNavBarContents = compiledNavBar;
-        }
+        page.HTMLNavBarContents = compiledNavBar;
     }
+}
 
-    /// <summary>
-    /// Add Compiler Variables to the page.
-    /// </summary>
-    public class CompilerVariablePass : ICompilerPass
+/// <summary>
+///     Add Compiler Variables to the page.
+/// </summary>
+public class CompilerVariablePass : ICompilerPass
+{
+    public void Execute(Page page)
     {
-        public void Execute(Page page)
+        // Define compiler variable and their values
+        var replacements = new Dictionary<string, string>
         {
-            // Define compiler variable and their values
-            var replacements = new Dictionary<string, string>
-            {
-                { "{{NAVBAR}}", page.HTMLNavBarContents },
-                { "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents },
-                { "{{DOCUMENTATION_TITLE}}", page.Title }
-            };
+            { "{{NAVBAR}}", page.HTMLNavBarContents },
+            { "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents },
+            { "{{DOCUMENTATION_TITLE}}", page.Title }
+        };
 
-            // Replace compiler variables with their value
-            page.HTMLContents = HTMLUtil.ReplaceKeywords(HTMLTemplates.PageTemplate, replacements);
-        }
+        // Replace compiler variables with their value
+        page.HTMLContents = HTMLUtil.ReplaceKeywords(HTMLTemplates.PageTemplate, replacements);
     }
+}
 
-    /// <summary>
-    /// Removes all comments from the page.
-    /// </summary>
-    public class CommentRemovalPass : ICompilerPass
+/// <summary>
+///     Removes all comments from the page.
+/// </summary>
+public class CommentRemovalPass : ICompilerPass
+{
+    public void Execute(Page page)
     {
-        public void Execute(Page page)
-        {
-            page.HTMLContents = Regex.Replace(page.HTMLContents, "<!--.*?-->", "", RegexOptions.Singleline);
-        }
+        page.HTMLContents = Regex.Replace(page.HTMLContents, "<!--.*?-->", "", RegexOptions.Singleline);
     }
 }

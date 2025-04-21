@@ -1,49 +1,41 @@
-﻿using System;
-using System.IO;
-using System.Threading;
+﻿namespace DocumentationGenerator.Utilities;
 
-namespace DocumentationGenerator.Utilities
+public static class FileUtil
 {
-    public static class FileUtil
+    /// <summary>
+    ///     Safetly reads the contents of a text file.
+    /// </summary>
+    public static string SafeReadAllText(string path, int retries = 5, int delay = 200)
     {
-        /// <summary>
-        /// Safetly reads the contents of a text file.
-        /// </summary>
-        public static string SafeReadAllText(string path, int retries = 5, int delay = 200)
-        {
-            for (int i = 0; i < retries; i++)
+        for (var i = 0; i < retries; i++)
+            try
             {
-                try
-                {
-                    return File.ReadAllText(path);
-                }
-                catch (IOException)
-                {
-                    if (i == retries - 1) throw;
-                    Thread.Sleep(delay);
-                }
+                return File.ReadAllText(path);
             }
-            return null;
-        }
+            catch (IOException)
+            {
+                if (i == retries - 1) throw;
+                Thread.Sleep(delay);
+            }
 
-        /// <summary>
-        /// Safetly writes the contents of a text file.
-        /// </summary>
-        public static void SafeWriteAllText(string path, string contents, int retries = 5, int delay = 200)
-        {
-            for (int i = 0; i < retries; i++)
+        return null;
+    }
+
+    /// <summary>
+    ///     Safetly writes the contents of a text file.
+    /// </summary>
+    public static void SafeWriteAllText(string path, string contents, int retries = 5, int delay = 200)
+    {
+        for (var i = 0; i < retries; i++)
+            try
             {
-                try
-                {
-                    File.WriteAllText(path, contents);
-                    return;
-                }
-                catch (IOException)
-                {
-                    if (i == retries - 1) throw;
-                    Thread.Sleep(delay);
-                }
+                File.WriteAllText(path, contents);
+                return;
             }
-        }
+            catch (IOException)
+            {
+                if (i == retries - 1) throw;
+                Thread.Sleep(delay);
+            }
     }
 }

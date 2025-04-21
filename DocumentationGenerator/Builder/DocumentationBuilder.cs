@@ -3,100 +3,91 @@ using DocumentationGenerator.FileUtilities.Markdown;
 using DocumentationGenerator.Serializing;
 using DocumentationGenerator.Utilities;
 
-namespace DocumentationGenerator.Builder
+namespace DocumentationGenerator.Builder;
+
+public class DocumentationBuilder
 {
-    public class DocumentationBuilder
+    public DocumentationBuilder(string jsonFilePath, string outputPath)
     {
-        public NavBar NavBar { get; private set; }
-        public string OutputPath { get; private set; }
-        public string JsonDirectory { get; private set; }
+        OutputPath = outputPath;
+        JsonDirectory = Path.GetDirectoryName(Path.GetFullPath(jsonFilePath));
 
-        public DocumentationBuilder(string jsonFilePath, string outputPath)
+        // Load and deserialize navbar
+        var jsonContent = File.ReadAllText(jsonFilePath);
+        NavBar = NavBarUtil.Deserialize(jsonContent);
+
+        // Ensure output directory exists
+        Directory.CreateDirectory(OutputPath);
+    }
+
+    public NavBar NavBar { get; }
+    public string OutputPath { get; }
+    public string JsonDirectory { get; }
+
+    public void BuildAllPages()
+    {
+        foreach (var title in NavBar.Titles)
+        foreach (var page in title.Pages)
+            ProcessPage(page);
+
+        Console.WriteLine("Documentation generation complete!");
+    }
+
+    private void ProcessPage(KeyValuePair<string, string> page)
+    {
+        var markdownFilePath = Path.Combine(JsonDirectory, page.Value);
+
+        if (!File.Exists(markdownFilePath))
         {
-            OutputPath = outputPath;
-            JsonDirectory = Path.GetDirectoryName(Path.GetFullPath(jsonFilePath));
-
-            // Load and deserialize navbar
-            string jsonContent = File.ReadAllText(jsonFilePath);
-            NavBar = NavBarUtil.Deserialize(jsonContent);
-
-            // Ensure output directory exists
-            Directory.CreateDirectory(OutputPath);
+            Console.WriteLine($"Warning: Markdown file not found: {markdownFilePath}");
+            return;
         }
 
-        public void BuildAllPages()
+        var newPage = new Page
         {
-            foreach (NavTitle title in NavBar.Titles)
-            {
-                foreach (KeyValuePair<string, string> page in title.Pages)
-                {
-                    ProcessPage(page);
-                }
-            }
+            MarkdownContents = FileUtil.SafeReadAllText(markdownFilePath),
+            Title = page.Key
+        };
 
-            Console.WriteLine("Documentation generation complete!");
-        }
+        var relativeMarkdownPath = Path.GetRelativePath(JsonDirectory, markdownFilePath);
+        var fullOutputPath = Path.Combine(OutputPath, Path.ChangeExtension(relativeMarkdownPath, ".html"));
 
-        private void ProcessPage(KeyValuePair<string, string> page)
+        // Ensure output directory exists
+        Directory.CreateDirectory(Path.GetDirectoryName(fullOutputPath));
+
+        // Write HTML file
+        newPage.WriteToFile(fullOutputPath);
+
+        // Copy resources requested by markdown (imgs, etc)
+        foreach (var resourcePath in MarkdownUtil.GetLinkedMDResourcePaths(newPage.MarkdownContents))
+            CopyResource(resourcePath, JsonDirectory, Path.GetDirectoryName(fullOutputPath));
+
+        // Copy resources requested by HTML (css, js, etc)
+        foreach (var resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
+            CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
+
+        Console.WriteLine($"Generated: {fullOutputPath}");
+    }
+
+    private void CopyResource(string resourcePath, string sourceBaseDir, string destinationDir)
+    {
+        try
         {
-            string markdownFilePath = Path.Combine(JsonDirectory, page.Value);
-
-            if (!File.Exists(markdownFilePath))
+            var fullSourcePath = Path.Combine(sourceBaseDir, resourcePath);
+            if (!File.Exists(fullSourcePath))
             {
-                Console.WriteLine($"Warning: Markdown file not found: {markdownFilePath}");
+                Console.WriteLine($"Warning: Resource not found: {resourcePath}");
                 return;
             }
 
-            var newPage = new Page
-            {
-                MarkdownContents = FileUtil.SafeReadAllText(markdownFilePath),
-                Title = page.Key
-            };
-
-            string relativeMarkdownPath = Path.GetRelativePath(JsonDirectory, markdownFilePath);
-            string fullOutputPath = Path.Combine(OutputPath, Path.ChangeExtension(relativeMarkdownPath, ".html"));
-
-            // Ensure output directory exists
-            Directory.CreateDirectory(Path.GetDirectoryName(fullOutputPath));
-
-            // Write HTML file
-            newPage.WriteToFile(fullOutputPath);
-
-            // Copy resources requested by markdown (imgs, etc)
-            foreach (string resourcePath in MarkdownUtil.GetLinkedMDResourcePaths(newPage.MarkdownContents))
-            {
-                CopyResource(resourcePath, JsonDirectory, Path.GetDirectoryName(fullOutputPath));
-            }
-
-            // Copy resources requested by HTML (css, js, etc)
-            foreach (string resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
-            {
-                CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
-            }
-
-            Console.WriteLine($"Generated: {fullOutputPath}");
+            var fullDestPath = Path.Combine(destinationDir, resourcePath);
+            Directory.CreateDirectory(Path.GetDirectoryName(fullDestPath));
+            File.Copy(fullSourcePath, fullDestPath, true);
+            Console.WriteLine($"Copied resource: {resourcePath}");
         }
-
-        private void CopyResource(string resourcePath, string sourceBaseDir, string destinationDir)
+        catch (Exception ex)
         {
-            try
-            {
-                string fullSourcePath = Path.Combine(sourceBaseDir, resourcePath);
-                if (!File.Exists(fullSourcePath))
-                {
-                    Console.WriteLine($"Warning: Resource not found: {resourcePath}");
-                    return;
-                }
-
-                string fullDestPath = Path.Combine(destinationDir, resourcePath);
-                Directory.CreateDirectory(Path.GetDirectoryName(fullDestPath));
-                File.Copy(fullSourcePath, fullDestPath, overwrite: true);
-                Console.WriteLine($"Copied resource: {resourcePath}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error copying resource {resourcePath}: {ex.Message}");
-            }
+            Console.WriteLine($"Error copying resource {resourcePath}: {ex.Message}");
         }
     }
 }

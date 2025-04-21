@@ -1,10 +1,9 @@
 ﻿using DocumentationGenerator.Serializing;
 
-namespace DocumentationGenerator.Compilation
+namespace DocumentationGenerator.Compilation;
+
+// Base Compiler Pass Interface
+public interface ICompilerPass
 {
-    // Base Compiler Pass Interface
-    public interface ICompilerPass
-    {
-        void Execute(Page page);
-    }
+    void Execute(Page page);
 }
