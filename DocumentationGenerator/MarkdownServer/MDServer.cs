@@ -55,7 +55,11 @@ namespace DocumentationGenerator.MarkdownServer
 
             // Build site when files change
             var hotReload = new HotReload(System.IO.Directory.GetCurrentDirectory());
-            hotReload.RegisterCallback(filePath => builder.BuildAllPages());
+            hotReload.RegisterCallback(filePath =>
+            {
+                builder.BuildAllPages(); // Build the site
+                server.ForceRefresh(); // Refresh the server
+            });
 
             // Open server and block until closed
             server.OpenServer(true);

@@ -1,4 +1,5 @@
 ﻿using DocumentationGenerator.Compilation;
+using DocumentationGenerator.Utilities;
 
 namespace DocumentationGenerator.Serializing
 {
@@ -35,7 +36,7 @@ namespace DocumentationGenerator.Serializing
             if (HTMLContents == null)
                 CompilePage();
 
-            File.WriteAllText(path, HTMLContents);
+            FileUtil.SafeWriteAllText(path, HTMLContents);
         }
 
 
