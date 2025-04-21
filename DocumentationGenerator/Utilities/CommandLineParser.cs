@@ -1,35 +1,57 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DocGenServer.LocalServer;
+using System;
 
 namespace DocumentationGenerator.Utilities
 {
+    public class CommandLineOptions
+    {
+        public string? JsonFilePath { get; set; }
+        public string OutputPath { get; set; } = "Build";
+        public int? HostPort { get; set; } = null;
+    }
+
     public static class CommandLineParser
     {
-        public static (string jsonFilePath, string outputPath) ParseArguments(string[] args)
+        public static CommandLineOptions ParseArguments(string[] args)
         {
+            var options = new CommandLineOptions();
+
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: DocumentationGenerator.exe <JSON File> [-o OutputDirectory]");
+                Console.WriteLine("Usage:");
+                Console.WriteLine("  DocumentationGenerator.exe <JSON File> [-o OutputDirectory]");
+                Console.WriteLine("  DocumentationGenerator.exe host [Port]");
                 throw new ArgumentException("No arguments provided");
             }
 
-            string outputPath = "Build";
-            string jsonFilePath = args[0];
-
-            // Parse command line arguments
-            for (int i = 1; i < args.Length; i++)
+            if (args[0] == "host")
             {
-                if (args[i] == "-o" && i + 1 < args.Length)
+                // Hosting mode
+                if (args.Length > 1 && int.TryParse(args[1], out int port))
                 {
-                    outputPath = args[i + 1];
-                    i++;
+                    options.HostPort = port;
+                }
+                else
+                {
+                    options.HostPort = 9999; // default port
+                }
+            }
+            else
+            {
+                // Build mode
+                options.JsonFilePath = args[0];
+
+                for (int i = 1; i < args.Length; i++)
+                {
+                    if (args[i] == "-o" && i + 1 < args.Length)
+                    {
+                        options.OutputPath = args[i + 1];
+                        i++;
+                    }
                 }
             }
 
-            return (jsonFilePath, outputPath);
+            return options;
         }
     }
 }

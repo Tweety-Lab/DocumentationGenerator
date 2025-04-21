@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace DocGenServer.LocalServer
 {
     /// <summary>
-    /// Manages the lifecycle of a local web-server
+    /// Manages the lifecycle of a local web-server.
     /// </summary>
     public class Server
     {
