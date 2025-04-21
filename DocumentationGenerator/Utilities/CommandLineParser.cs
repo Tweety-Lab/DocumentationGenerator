@@ -16,7 +16,7 @@
             if (args.Length == 0)
             {
                 Console.WriteLine("Usage:");
-                Console.WriteLine("  DocumentationGenerator.exe <JSON File> [-o OutputDirectory]");
+                Console.WriteLine("  DocumentationGenerator.exe <Markdown Directory> [-o OutputDirectory]");
                 Console.WriteLine("  DocumentationGenerator.exe host [Port]");
                 throw new ArgumentException("No arguments provided");
             }
@@ -36,7 +36,7 @@
             else
             {
                 // Build mode
-                options.JsonFilePath = args[0];
+                options.JsonFilePath = args[0] + "/navbar.json";
 
                 for (int i = 1; i < args.Length; i++)
                 {
