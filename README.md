@@ -1,45 +1,33 @@
-# Testing
-In the Project root there's a `build.bat` file, this file builds the project and then uses it to generate documentation for the **Test Documentation located in "TestDocs"**. This outputs the built documentation to "Build".
+# 🔧 Documentation Generator 🔧
+*A C# Tool that converts `.md` documentation into a highly customizable static website.*
 
-**If the build.bat script doesn't work, make sure you have .NET installed!**
+Documentation Generator allows you to quickly turn Markdown files into a fully customizable, static website that can be deployed with no extra work. You can use an out-of-the-box Theme or modify the modular HTML files to perfectly fit any layout, color scheme or style.
 
-# Compiling
-Install VS2022 With C# Support
+## Getting Started
+To begin creating a Documentation Generator site, download the setup from the `Releases` section. After installing Documentation Generator, create a new folder to hold your Markdown files and add a `navbar.json` file. This file controls how pages in your documentation ara accessed through the Navigation Bar.
 
-Open DocumentationGenerator.sln
-
-Right Click "DocumentationGenerator" -> Build
-
-# Reading the JSON Template
-There's an example JSON file in the Project root named "JSON_TEMPLATE.json". The JSON defines a Navbar that stores data in a tree like format:
-
-```
-📂 JSON Root
-├── 📝 Titles
-│   ├── 📄 Title: Title Name
-│   └── 📄 Page
-│   │   └── 🆓 Button: Button Name - Markdown Path
-```
-
-An Example of valid navbar JSON is this:
+This is an example of a valid `navbar.json`
 ```JSON
 {
   "Titles": [
     {
-      "Title": "This is a title",
+      "Title": "Fruits",
       "Pages": {
-        "THIS IS A BUTTON": "this is the path to the markdown file linked with the button"
+        "Tomato": "tomato.md",
+        "Apple": "apple.md",
       }
     },
     {
-      "Title": "Fruits",
+      "Title": "Vegetables",
       "Pages": {
-        "Apple": "pages/apple.md",
-        "Banana": "pages/banana.md",
-        "Orange": "pages/orange.md"
+        "Carrot": "carrot.md",
+        "Lettuce": "lettuce.md",
       }
     }
   ]
 }
 ```
-This is a navbar containing 2 titles: *"This is a title"* and *"Fruits"*. The *"Fruits"* Title includes 3 Buttons, the first one is labelled *"Apple"* which links to a markdown file located at *"pages/apple.md"*.
+This makes 2 titles, 'Fruits' and 'Vegetables', each with two pages linking to a .md file.
+
+### Building The Site
+Once you have a valid `navbar.json`, navigate to its location in your directory and run `DocumentationGenerator "./"` in the console. This will generate a `Build` folder containing all the .HTML, .CSS, .JS files, alongside any images or resources required for the site.
