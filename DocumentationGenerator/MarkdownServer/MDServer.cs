@@ -1,5 +1,5 @@
-﻿using DocGenServer.LocalServer;
-using DocumentationGenerator.Builder;
+﻿using DocumentationGenerator.Builder;
+using Server;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +20,7 @@ namespace DocumentationGenerator.MarkdownServer
         public int Port { get; set; }
 
         // Local server
-        private Server server;
+        private LocalServer server;
 
         public MDServer(string directory, int port)
         {
@@ -55,7 +55,7 @@ namespace DocumentationGenerator.MarkdownServer
             builder.BuildAllPages();
 
             // Start a local server for the built site
-            server = new Server(outputPath, Port);
+            server = new LocalServer(outputPath, Port);
 
             // Open server and block until closed
             server.OpenServer(true);
