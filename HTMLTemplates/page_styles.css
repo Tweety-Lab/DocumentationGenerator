@@ -19,17 +19,30 @@
     grid-template-columns: auto 3fr;
 }
 
+.grid {
+    display: grid;
+}
 
+.grid--cols-2 {
+    grid-template-columns: auto 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .grid--cols-2 {
+        grid-template-columns: 1fr;
+    }
+}
 /* Typography */
 
 html {
-    font-size: 62.5%;
+    font-size: 62.5%; /* = 10px, make calculations easier */
     line-height: 1.5;
 }
 
 body {
     font-family: Arial, Helvetica, sans-serif;
     color: #333;
+    width: 100%;
 }
 
 h1, h2, h3 {
@@ -50,7 +63,7 @@ h3 {
 
 p {
     font-size: var(--p-font-size);
-    width: 70ch;
+    max-width: 70ch;
     margin: 0;
 }
 
@@ -99,12 +112,12 @@ p {
 /* NAV BAR */
 .nav-bar {
     position: sticky;
-    height: 100vh; /* 100% of the viewport height */
+    height: fit-content;
     background-color: #1b1b1b;
     color: white;
-    padding: 0 3rem;
+    padding: 0 3rem 3rem; /*0 top padding, 3rem right and left, 3rem bottom */
     box-sizing: border-box;
-    min-width: 300px;
+    min-width: 22rem;
 }
 
 .nav-bar ul {
@@ -143,3 +156,8 @@ p {
     transform: scale(1.1);
 }
 
+@media screen and (min-width: 768px) {
+    .nav-bar {
+        height: 100vh;
+    }
+}
