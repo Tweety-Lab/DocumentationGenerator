@@ -171,3 +171,22 @@ p {
         height: 100vh;
     }
 }
+
+/* Collapsibles - for NavBar */
+.collapsible__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.collapsible--expanded .nav__toggler {
+    opacity: 1;
+    box-shadow: 0 0 0 3px #666;
+    border-radius: 5px;
+}
+
+.collapsible--expanded .collapsible__content {
+    opacity: 1;
+    max-height: 100vh;
+}
