@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "DocumentationGenerator": {
+      "commandName": "Project",
+      "commandLineArgs": "host 9999",
+      "workingDirectory": "D:\\DocumentationGenerator\\DocumentationGenerator\\TestDocs"
+    }
+  }
+}

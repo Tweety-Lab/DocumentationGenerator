@@ -2,6 +2,7 @@
 using DocumentationGenerator.Utilities;
 using DocGenServer.LocalServer;
 using System;
+using DocumentationGenerator.MarkdownServer;
 
 namespace DocumentationGenerator
 {
@@ -19,8 +20,8 @@ namespace DocumentationGenerator
                 if (options.HostPort.HasValue)
                 {
                     Console.WriteLine($"Starting local server on port {options.HostPort.Value}...");
-                    var server = new Server("./", options.HostPort.Value);
-                    server.OpenServer(true);
+                    var server = new MDServer("", options.HostPort.Value);
+                    server.OpenServer();
 
                     return;
                 }

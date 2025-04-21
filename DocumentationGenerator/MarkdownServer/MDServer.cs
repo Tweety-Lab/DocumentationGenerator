@@ -1,0 +1,64 @@
+﻿using DocGenServer.LocalServer;
+using DocumentationGenerator.Builder;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DocumentationGenerator.MarkdownServer
+{
+    /// <summary>
+    /// Creates a local server for markdown documentation.
+    /// </summary>
+    public class MDServer
+    {
+        // Directory to the root of the markdown files, this is where the navbar json lives.
+        public string MDDirectory { get; set; }
+
+        // Port to open server on
+        public int Port { get; set; }
+        
+        // Local server
+        private Server server;
+
+        public MDServer(string directory, int port)
+        {
+            // Resolve relative to the current working directory of the shell that launched this process
+            if (!Path.IsPathRooted(directory))
+            {
+                directory = Path.GetFullPath(Path.Combine(System.IO.Directory.GetCurrentDirectory(), directory));
+            }
+
+            MDDirectory = directory;
+            Port = port;
+        }
+
+
+        public void OpenServer()
+        {
+            string jsonPath = Path.Combine(MDDirectory, "test-docs.json");
+            if (!File.Exists(jsonPath))
+            {
+                Console.WriteLine($"Error: Could not find JSON file at {jsonPath}");
+                return;
+            }
+
+            string outputPath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Build");
+
+            // Build the markdown to a site
+            DocumentationBuilder builder = new DocumentationBuilder(jsonPath, outputPath);
+            Program.Builder = builder;
+            builder.BuildAllPages();
+
+            // Start a local server for the built site
+            server = new Server(outputPath, Port);
+
+            // Open server and block until closed
+            server.OpenServer(true);
+
+            // When we reach this, server has closed.
+            Console.WriteLine("Server Closed.");
+        }
+    }
+}
