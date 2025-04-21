@@ -1,43 +1,42 @@
 ﻿using DocumentationGenerator.Builder;
-using DocumentationGenerator.MarkdownServer;
 using DocumentationGenerator.FileUtilities;
+using DocumentationGenerator.MarkdownServer;
 
-namespace DocumentationGenerator
+namespace DocumentationGenerator;
+
+internal static class Program
 {
-    static class Program
+    public static DocumentationBuilder? Builder { get; set; }
+
+    private static void Main(string[] args)
     {
-        public static DocumentationBuilder? Builder { get; set; }
-
-        static void Main(string[] args)
+        try
         {
-            try
+            var options = CommandLineParser.ParseArguments(args);
+
+            // Local server
+            if (options.HostPort.HasValue)
             {
-                var options = CommandLineParser.ParseArguments(args);
+                Console.WriteLine($"Starting local server on port {options.HostPort.Value}...");
+                var server = new MDServer("", options.HostPort.Value);
+                server.OpenServer();
 
-                // Local server
-                if (options.HostPort.HasValue)
-                {
-                    Console.WriteLine($"Starting local server on port {options.HostPort.Value}...");
-                    var server = new MDServer("", options.HostPort.Value);
-                    server.OpenServer();
-
-                    return;
-                }
-
-                if (options.JsonFilePath == null)
-                {
-                    Console.WriteLine("Error: No JSON file path provided.");
-                    return;
-                }
-
-                // Builder
-                Builder = new DocumentationBuilder(options.JsonFilePath, options.OutputPath);
-                Builder.BuildAllPages();
+                return;
             }
-            catch (Exception ex)
+
+            if (options.JsonFilePath == null)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine("Error: No JSON file path provided.");
+                return;
             }
+
+            // Builder
+            Builder = new DocumentationBuilder(options.JsonFilePath, options.OutputPath);
+            Builder.BuildAllPages();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
         }
     }
 }

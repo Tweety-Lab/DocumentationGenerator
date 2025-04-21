@@ -1,59 +1,52 @@
 ﻿using System.Text.RegularExpressions;
 using Markdig;
-using Markdig.Syntax;
 
-namespace DocumentationGenerator.FileUtilities.Markdown
+namespace DocumentationGenerator.FileUtilities.Markdown;
+
+public static class MarkdownUtil
 {
-    public static class MarkdownUtil
+    public static string ConvertMarkdownToHTML(string markdown)
     {
-        public static string ConvertMarkdownToHTML(string markdown)
+        // Parse to markdown
+        var document = Markdig.Markdown.Parse(markdown);
+
+        // Convert to HTML
+        var html = document.ToHtml();
+
+        // Return HTML
+        return html;
+    }
+
+    /// <summary>
+    ///     Get all linked resource paths in a markdown file.
+    /// </summary>
+    public static List<string> GetLinkedMDResourcePaths(string markdown)
+    {
+        var paths = new List<string>();
+
+        // Regex pattern to match markdown links: [text](path "optional title")
+        var linkMatches = Regex.Matches(markdown, @"\[.*?\]\((.*?)(?:\s+[""'].*?[""'])?\)");
+
+        foreach (Match match in linkMatches)
         {
-            // Parse to markdown
-            MarkdownDocument document = Markdig.Markdown.Parse(markdown);
+            if (match.Groups.Count < 2) continue;
 
-            // Convert to HTML
-            var html = document.ToHtml();
+            var rawPath = match.Groups[1].Value.Trim();
 
-            // Return HTML
-            return html;
+            // Skip empty paths, anchors (#), and external URLs
+            if (string.IsNullOrWhiteSpace(rawPath) ||
+                rawPath.StartsWith("#") ||
+                rawPath.StartsWith("http://") ||
+                rawPath.StartsWith("https://") ||
+                rawPath.StartsWith("mailto:"))
+                continue;
+
+            // Remove query strings and anchors from the path
+            var cleanPath = rawPath.Split(new[] { '#', '?' }, 2)[0];
+
+            if (!string.IsNullOrWhiteSpace(cleanPath)) paths.Add(cleanPath);
         }
 
-        /// <summary>
-        /// Get all linked resource paths in a markdown file.
-        /// </summary>
-        public static List<string> GetLinkedMDResourcePaths(string markdown)
-        {
-            var paths = new List<string>();
-
-            // Regex pattern to match markdown links: [text](path "optional title")
-            var linkMatches = Regex.Matches(markdown, @"\[.*?\]\((.*?)(?:\s+[""'].*?[""'])?\)");
-
-            foreach (Match match in linkMatches)
-            {
-                if (match.Groups.Count < 2) continue;
-
-                string rawPath = match.Groups[1].Value.Trim();
-
-                // Skip empty paths, anchors (#), and external URLs
-                if (string.IsNullOrWhiteSpace(rawPath) ||
-                    rawPath.StartsWith("#") ||
-                    rawPath.StartsWith("http://") ||
-                    rawPath.StartsWith("https://") ||
-                    rawPath.StartsWith("mailto:"))
-                {
-                    continue;
-                }
-
-                // Remove query strings and anchors from the path
-                var cleanPath = rawPath.Split(new[] { '#', '?' }, 2)[0];
-
-                if (!string.IsNullOrWhiteSpace(cleanPath))
-                {
-                    paths.Add(cleanPath);
-                }
-            }
-
-            return paths.Distinct().ToList(); // Return unique paths
-        }
+        return paths.Distinct().ToList(); // Return unique paths
     }
 }

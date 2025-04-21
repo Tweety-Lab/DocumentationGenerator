@@ -1,59 +1,58 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace DocumentationGenerator.Serializing
+namespace DocumentationGenerator.Serializing;
+
+public static class NavBarUtil
 {
-    public static class NavBarUtil
+    /// <summary>
+    ///     Convert JSON into a NavBar object.
+    /// </summary>
+    /// <param name="json"></param>
+    /// <returns>Deserialized object</returns>
+    public static NavBar Deserialize(string json)
     {
-        /// <summary>
-        /// Convert JSON into a NavBar object.
-        /// </summary>
-        /// <param name="json"></param>
-        /// <returns>Deserialized object</returns>
-        public static NavBar Deserialize(string json)
+        return JsonSerializer.Deserialize<NavBar>(json, new JsonSerializerOptions
         {
-            return JsonSerializer.Deserialize<NavBar>(json, new JsonSerializerOptions
-            {
-                PropertyNameCaseInsensitive = true
-            });
-        }
+            PropertyNameCaseInsensitive = true
+        });
+    }
 
-        /// <summary>
-        /// Convert a NavBar object to HTML
-        /// </summary>
-        /// <param name="navbar"></param>
-        /// <returns></returns>
-        public static string ConvertNavBarToHTML(NavBar navbar)
+    /// <summary>
+    ///     Convert a NavBar object to HTML
+    /// </summary>
+    /// <param name="navbar"></param>
+    /// <returns></returns>
+    public static string ConvertNavBarToHTML(NavBar navbar)
+    {
+        var html = new StringBuilder();
+        html.Append("<ul>");
+
+        foreach (var title in navbar.Titles)
         {
-            var html = new StringBuilder();
-            html.Append("<ul>");
+            // Start title list item
+            html.Append($"<li class=\"nav__title\">{title.Title}");
 
-            foreach (var title in navbar.Titles)
+            // Start nested pages list
+            html.Append("<ul class=\"nav__list\">");
+
+            // Add pages as nested list items
+            foreach (var page in title.Pages)
             {
-                // Start title list item
-                html.Append($"<li class=\"nav__title\">{title.Title}");
-
-                // Start nested pages list
-                html.Append("<ul class=\"nav__list\">");
-
-                // Add pages as nested list items
-                foreach (var page in title.Pages)
-                {
-                    string relativeLink = page.Value.Replace(".md", ".html");
-                    // root-relative
-                    html.Append($"<li class=\"nav__list-item\"><a href=\"/{relativeLink}\">{page.Key}</a></li>");
-                }
-
-                // Close nested pages list
-                html.Append("</ul>");
-
-                // Close title list item
-                html.Append("</li>");
+                var relativeLink = page.Value.Replace(".md", ".html");
+                // root-relative
+                html.Append($"<li class=\"nav__list-item\"><a href=\"/{relativeLink}\">{page.Key}</a></li>");
             }
 
-            // Close main list
+            // Close nested pages list
             html.Append("</ul>");
-            return html.ToString();
+
+            // Close title list item
+            html.Append("</li>");
         }
+
+        // Close main list
+        html.Append("</ul>");
+        return html.ToString();
     }
 }
