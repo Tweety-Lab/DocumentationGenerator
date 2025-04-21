@@ -24,7 +24,7 @@ namespace DocumentationGenerator.Compilation
         public void Execute(Page page)
         {
             string navbarHTML = NavBarUtil.ConvertNavBarToHTML(Program.Builder.NavBar);
-            string compiledNavBar = HTMLUtil.ReplaceKeywordOutsideComments(
+            string compiledNavBar = HTMLUtil.ReplaceKeyword(
                 HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
 
             page.HTMLNavBarContents = compiledNavBar;
@@ -38,16 +38,15 @@ namespace DocumentationGenerator.Compilation
     {
         public void Execute(Page page)
         {
-            string compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
-                HTMLTemplates.PageTemplate, "{{NAVBAR}}", page.HTMLNavBarContents);
+            // Define compiler variable and their values
+            var replacements = new Dictionary<string, string>
+            {
+                { "{{NAVBAR}}", page.HTMLNavBarContents },
+                { "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents },
+                { "{{DOCUMENTATION_TITLE}}", page.Title }
+            };
 
-            compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
-                compiledHTML, "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents);
-
-            compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
-                compiledHTML, "{{DOCUMENTATION_TITLE}}", page.Title);
-
-            page.HTMLContents = compiledHTML;
+            page.HTMLContents = HTMLUtil.ReplaceKeywords(HTMLTemplates.PageTemplate, replacements);
         }
     }
 

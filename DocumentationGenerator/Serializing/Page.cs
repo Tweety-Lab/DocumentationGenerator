@@ -9,7 +9,7 @@ namespace DocumentationGenerator.Serializing
     public class Page
     {
         // All compiler passes to run
-        private static readonly List<ICompilerPass> _compilerPasses = new List<ICompilerPass>
+        private static readonly List<ICompilerPass> CompilerPasses = new List<ICompilerPass>
         {
             new MarkdownConversionPass(),
             new NavBarGenerationPass(),
@@ -48,7 +48,7 @@ namespace DocumentationGenerator.Serializing
             HTMLDocumentationContents ??= MarkdownContents;
 
             // Apply compiler passes
-            foreach (var pass in _compilerPasses)
+            foreach (var pass in CompilerPasses)
             {
                 pass.Execute(this);
             }
@@ -56,7 +56,7 @@ namespace DocumentationGenerator.Serializing
 
         public static void RegisterCompilerPass(ICompilerPass pass)
         {
-            _compilerPasses.Add(pass);
+            CompilerPasses.Add(pass);
         }
     }
 }

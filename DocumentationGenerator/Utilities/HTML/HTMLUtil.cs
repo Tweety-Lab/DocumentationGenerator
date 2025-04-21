@@ -35,9 +35,9 @@ namespace DocumentationGenerator.FileUtilities.HTML
         }
 
         /// <summary>
-        /// Replaces all occurrences of a keyword outside HTML comments
+        /// Replaces all occurrences of a keyword outside HTML comments.
         /// </summary>
-        public static string ReplaceKeywordOutsideComments(string html, string keyword, string replacement)
+        public static string ReplaceKeyword(string html, string keyword, string replacement)
         {
             // Split the HTML into parts outside and inside comments
             var parts = Regex.Split(html, @"(<!--.*?-->)", RegexOptions.Singleline);
@@ -49,6 +49,26 @@ namespace DocumentationGenerator.FileUtilities.HTML
 
                 // Replace the keyword
                 parts[i] = parts[i].Replace(keyword, replacement);
+            }
+
+            return string.Concat(parts);
+        }
+
+        /// <summary>
+        /// Replaces multiple keywords outside HTML comments.
+        /// </summary>
+        public static string ReplaceKeywords(string html, Dictionary<string, string> replacements)
+        {
+            var parts = Regex.Split(html, @"(<!--.*?-->)", RegexOptions.Singleline);
+
+            for (int i = 0; i < parts.Length; i++)
+            {
+                if (i % 2 != 0) continue;
+
+                foreach (var kvp in replacements)
+                {
+                    parts[i] = parts[i].Replace(kvp.Key, kvp.Value);
+                }
             }
 
             return string.Concat(parts);
