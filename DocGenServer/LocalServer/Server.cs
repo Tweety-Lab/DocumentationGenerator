@@ -23,38 +23,42 @@ namespace DocGenServer.LocalServer
 
         public Server(string directory, int port = 9999)
         {
+            if (!System.IO.Directory.Exists(directory))
+            {
+                throw new DirectoryNotFoundException($"The directory '{directory}' does not exist.");
+            }
+
             Directory = directory;
             Port = port;
         }
 
         // Start a local server
-        public void OpenServer()
+        public void OpenServer(bool blocking = false)
         {
-            // Initialize HTTPListener
             _listener = new HttpListener();
             _listener.Prefixes.Add($"http://localhost:{Port}/");
-
-            // Start the server
             _listener.Start();
             Console.WriteLine($"Hosting DocGen on http://localhost:{Port}/");
 
-            // Handle requests
-            ThreadPool.QueueUserWorkItem(o =>
+            if (blocking)
             {
                 while (_listener.IsListening)
                 {
-                    try
+                    var context = _listener.GetContext();
+                    ProcessRequest(context);
+                }
+            }
+            else
+            {
+                ThreadPool.QueueUserWorkItem(o =>
+                {
+                    while (_listener.IsListening)
                     {
-                        // Wait for a request
                         var context = _listener.GetContext();
                         ProcessRequest(context);
                     }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine($"Error: {ex.Message}");
-                    }
-                }
-            });
+                });
+            }
         }
 
         // Process a HTTP request
@@ -64,6 +68,13 @@ namespace DocGenServer.LocalServer
             {
                 // Get the requested file path
                 var requestedUrl = context.Request.Url.LocalPath.Substring(1); // Remove leading "/"
+
+                // Set home page to index.html
+                if (string.IsNullOrEmpty(requestedUrl))
+                {
+                    requestedUrl = "index.html";
+                }
+
                 var filePath = Path.Combine(Directory, requestedUrl);
 
                 // Check if the file exists

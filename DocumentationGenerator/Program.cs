@@ -20,12 +20,7 @@ namespace DocumentationGenerator
                 {
                     Console.WriteLine($"Starting local server on port {options.HostPort.Value}...");
                     var server = new Server("./", options.HostPort.Value);
-                    server.OpenServer();
-
-                    // Wait for input before shutting down
-                    Console.WriteLine("Press Enter to stop the server...");
-                    Console.ReadLine();
-                    server.ShutdownServer();
+                    server.OpenServer(true);
 
                     return;
                 }
