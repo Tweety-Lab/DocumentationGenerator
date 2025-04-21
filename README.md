@@ -33,16 +33,17 @@ This makes 2 titles, 'Fruits' and 'Vegetables', each with two pages linking to a
 Once you have a valid `navbar.json`, navigate to its location in your directory and run `DocumentationGenerator "./"` in the console. This will generate a `Build` folder containing all the .HTML, .CSS, .JS files, alongside any images or resources required for the site.
 
 ## Third-Party Libraries
-Documentation Generator uses the following Third-Party C# Libraries:
+
+Documentation Generator uses the following third-party C# libraries:
 
 - **Fleck (v1.2.0)**
-  - Licensed under MIT
+  - Licensed under the MIT License  
   - [View License](https://github.com/statianzo/Fleck/blob/master/LICENSE)
 
 - **Markdig (v0.41.0)**
-  - Licensed under BSD-2-Clause
+  - Licensed under the BSD-2-Clause License  
   - [View License](https://github.com/xoofx/markdig/blob/master/license.txt)
 
 - **System.Runtime.Serialization.Json (v4.3.0)**
-  - Licensed under the Microsoft End User License Agreement (MS-EULA)
+  - Licensed under the Microsoft End User License Agreement (MS-EULA)  
   - [View License](http://go.microsoft.com/fwlink/?LinkId=329770)
