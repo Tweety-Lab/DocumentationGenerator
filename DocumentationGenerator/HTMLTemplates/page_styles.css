@@ -1,0 +1,163 @@
+:root {
+    --content-background: #FAF9F6;
+    --inline-code-color: #e74c3c;
+    --p-font-size: 1.6rem
+}
+
+.content {
+    width: 100%;
+    background-color: var(--content-background)
+}
+
+.container {
+    max-width: 1140px;
+    margin: auto;
+}
+
+.side-by-side {
+    display: grid;
+    grid-template-columns: auto 3fr;
+}
+
+.grid {
+    display: grid;
+}
+
+.grid--cols-2 {
+    grid-template-columns: auto 1fr;
+}
+
+@media screen and (max-width: 768px) {
+    .grid--cols-2 {
+        grid-template-columns: 1fr;
+    }
+}
+/* Typography */
+
+html {
+    font-size: 62.5%; /* = 10px, make calculations easier */
+    line-height: 1.5;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    width: 100%;
+}
+
+h1, h2, h3 {
+    margin: 0;
+}
+
+h1 {
+    font-size: 3.815rem;
+}
+
+h2 {
+    font-size: 3.052rem;
+}
+
+h3 {
+    font-size: 2.441rem;
+}
+
+p {
+    font-size: var(--p-font-size);
+    max-width: 70ch;
+    margin: 0;
+}
+
+.inline-code {
+    background-color: whitesmoke;
+    border: 1px solid #999;
+    padding: .1rem .5rem;
+    font-family: monospace;
+}
+
+.inline-code--coloured {
+    color: var(--inline-code-color);
+
+}
+
+.subtitle {
+    font-size: calc(var(--p-font-size) * 1.05);
+    font-style: italic;
+}
+
+
+/* WARNING */
+.warning {
+    margin: 4rem 0;
+}
+.warning__body {
+    background-color: #ffedcc;
+    color: black;
+    padding: 1rem 2rem;
+}
+
+.warning__header {
+    color: white;
+    background-color: #f0b37e;
+    font-size: 2.1rem;
+    padding: 1rem 2rem;
+}
+
+.warning__heading {
+    display: inline-block;
+    font-size: 2.1rem;
+    margin: 0;
+}
+
+
+/* NAV BAR */
+.nav-bar {
+    position: sticky;
+    height: fit-content;
+    background-color: #1b1b1b;
+    color: white;
+    padding: 0 3rem 3rem; /*0 top padding, 3rem right and left, 3rem bottom */
+    box-sizing: border-box;
+    min-width: 22rem;
+}
+
+.nav-bar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.nav__list {
+    border-bottom: 1px solid #ccc;
+}
+
+.nav__list-item {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    padding: .4rem 0;
+    transition: all .15s;
+    transform-origin: center left;
+}
+
+.nav__title {
+    font-size: 2rem;
+    margin-top: 2rem;
+}
+
+.nav-bar a {
+    color: white;
+    text-decoration: none;
+}
+
+.nav__list-item a:hover {
+    text-decoration: underline;
+    color: #d3d3d3;
+}
+
+.nav__list-item:hover {
+    transform: scale(1.1);
+}
+
+@media screen and (min-width: 768px) {
+    .nav-bar {
+        height: 100vh;
+    }
+}
