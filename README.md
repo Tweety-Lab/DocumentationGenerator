@@ -1,5 +1,5 @@
 # 🔧 Documentation Generator 🔧
-*A C# Tool that converts `.md` documentation into a highly customizable static website.*
+*A lightweight C# tool for transforming Markdown (.md) documentation into fast, customizable static websites.*
 
 Documentation Generator allows you to quickly turn Markdown files into a fully customizable, static website that can be deployed with no extra work. You can use an out-of-the-box Theme or modify the modular HTML files to perfectly fit any layout, color scheme or style.
 
