@@ -46,6 +46,7 @@ namespace DocumentationGenerator.Compilation
                 { "{{DOCUMENTATION_TITLE}}", page.Title }
             };
 
+            // Replace compiler variables with their value
             page.HTMLContents = HTMLUtil.ReplaceKeywords(HTMLTemplates.PageTemplate, replacements);
         }
     }
