@@ -36,7 +36,7 @@ namespace DocumentationGenerator.MarkdownServer
 
         public void OpenServer()
         {
-            string jsonPath = Path.Combine(MDDirectory, "test-docs.json");
+            string jsonPath = Path.Combine(MDDirectory, "navbar.json");
             if (!File.Exists(jsonPath))
             {
                 Console.WriteLine($"Error: Could not find JSON file at {jsonPath}");

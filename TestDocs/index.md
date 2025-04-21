@@ -12,6 +12,3 @@ When the Compiler finds HTML that links with a resource (CSS, JS, etc), it autom
 
 ## Code Blocks
 Code Blocks will get their syntax highlighting from the `highlight.js` library.
-
-## Hot Reloading
-Changes in markdown automatically reflect on the hosted site. Like So!
