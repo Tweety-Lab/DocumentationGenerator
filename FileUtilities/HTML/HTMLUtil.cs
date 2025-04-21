@@ -44,18 +44,19 @@ namespace DocumentationGenerator.FileUtilities.HTML
         /// </summary>
         public static string ReplaceKeywordOutsideComments(string html, string keyword, string replacement)
         {
-            return Regex.Replace(html, @"(<!--.*?-->)|(" + Regex.Escape(keyword) + ")",
-                m =>
-                {
-                    // If this is a comment, leave it as-is
-                    if (m.Groups[1].Success)
-                        return m.Value;
+            // Split the HTML into parts outside and inside comments
+            var parts = Regex.Split(html, @"(<!--.*?-->)", RegexOptions.Singleline);
 
-                    // Otherwise, replace the placeholder
-                    else
-                        return replacement;
-                },
-                RegexOptions.Singleline);
+            for (int i = 0; i < parts.Length; i++)
+            {
+                // Skip comment parts
+                if (i % 2 != 0) continue;
+
+                // Replace the keyword
+                parts[i] = parts[i].Replace(keyword, replacement);
+            }
+
+            return string.Concat(parts);
         }
     }
 }
