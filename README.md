@@ -3,7 +3,7 @@
 
 Documentation Generator allows you to quickly turn Markdown files into a fully customizable, static website that can be deployed with no extra work. You can use an out-of-the-box Theme or modify the modular HTML files to perfectly fit any layout, color scheme or style.
 
-## Getting Started
+## 📝 Getting Started
 To begin creating a Documentation Generator site, download the setup from the `Releases` section. After installing Documentation Generator, create a new folder to hold your Markdown files and add a `navbar.json` file. This file controls how pages in your documentation ara accessed through the Navigation Bar.
 
 This is an example of a valid `navbar.json`
