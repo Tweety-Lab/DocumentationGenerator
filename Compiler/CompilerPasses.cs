@@ -42,7 +42,7 @@ namespace DocumentationGenerator.Compilation
     /// <summary>
     /// Add Compiler Variables to the page.
     /// </summary>
-    public class TemplateProcessingPass : ICompilerPass
+    public class CompilerVariablePass : ICompilerPass
     {
         public void Execute(Page page)
         {

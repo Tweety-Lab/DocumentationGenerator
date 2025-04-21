@@ -18,7 +18,7 @@ namespace DocumentationGenerator.Serializing
         {
             new MarkdownConversionPass(),
             new NavBarGenerationPass(),
-            new TemplateProcessingPass(),
+            new CompilerVariablePass(),
             new CommentRemovalPass()
         };
 
