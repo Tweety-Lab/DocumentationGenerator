@@ -18,7 +18,7 @@ namespace DocumentationGenerator.MarkdownServer
 
         // Port to open server on
         public int Port { get; set; }
-        
+
         // Local server
         private Server server;
 
@@ -32,6 +32,9 @@ namespace DocumentationGenerator.MarkdownServer
 
             MDDirectory = directory;
             Port = port;
+
+            // Exit handler
+            AppDomain.CurrentDomain.ProcessExit += OnExit;
         }
 
 
@@ -58,7 +61,27 @@ namespace DocumentationGenerator.MarkdownServer
             server.OpenServer(true);
 
             // When we reach this, server has closed.
-            Console.WriteLine("Server Closed.");
+            Console.WriteLine("Shutting Server Down.");
+        }
+
+        private void OnExit(object sender, EventArgs e)
+        {
+            // Path to the Build folder
+            string outputPath = Path.Combine(System.IO.Directory.GetCurrentDirectory(), "Build");
+
+            // Delete the Build folder if it exists
+            if (Directory.Exists(outputPath))
+            {
+                try
+                {
+                    Console.WriteLine("Cleaning Up Build...");
+                    Directory.Delete(outputPath, true); // Delete folder recursively
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error Cleaning Up Build: {ex.Message}");
+                }
+            }
         }
     }
 }
