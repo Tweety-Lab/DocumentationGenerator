@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text;
+using Fleck;
 
 namespace Server
 {
@@ -16,6 +17,10 @@ namespace Server
 
         // HttpListener instance
         private HttpListener _listener;
+
+        // Web Sockets 
+        private List<IWebSocketConnection> _allSockets = new List<IWebSocketConnection>();
+        private WebSocketServer _webSocketServer;
 
         public LocalServer(string directory, int port = 9999)
         {
@@ -34,6 +39,22 @@ namespace Server
             _listener = new HttpListener();
             _listener.Prefixes.Add($"http://localhost:{Port}/");
             _listener.Start();
+
+            _webSocketServer = new WebSocketServer($"ws://0.0.0.0:{Port + 1}");
+            _webSocketServer.Start(socket =>
+            {
+                socket.OnOpen = () =>
+                {
+                    Console.WriteLine("WebSocket client connected.");
+                    _allSockets.Add(socket);
+                };
+                socket.OnClose = () =>
+                {
+                    Console.WriteLine("WebSocket client disconnected.");
+                    _allSockets.Remove(socket);
+                };
+            });
+
             Console.WriteLine($"Hosting DocGen on http://localhost:{Port}/");
 
             if (blocking)
@@ -90,8 +111,39 @@ namespace Server
                     // Set the response type
                     context.Response.ContentType = mimeType;
 
-                    // Send the file content
+                    // Send the file content with an injected websocket script
                     byte[] fileContent = File.ReadAllBytes(filePath);
+
+                    if (fileExtension == ".html")
+                    {
+                        var contentString = Encoding.UTF8.GetString(fileContent);
+
+                        // Inject WebSocket refresh client script
+                        var injectScript = $@"
+<script>
+    var ws = new WebSocket('ws://localhost:{Port + 1}');
+    ws.onmessage = function(event) {{
+        if (event.data === 'refresh') {{
+            console.log('Page refresh triggered by server.');
+            window.location.reload();
+        }}
+    }};
+</script>
+";
+
+                        // Insert before closing </body> if present, else just append
+                        if (contentString.Contains("</body>"))
+                        {
+                            contentString = contentString.Replace("</body>", injectScript + "</body>");
+                        }
+                        else
+                        {
+                            contentString += injectScript;
+                        }
+
+                        fileContent = Encoding.UTF8.GetBytes(contentString);
+                    }
+
                     context.Response.ContentLength64 = fileContent.Length;
                     context.Response.OutputStream.Write(fileContent, 0, fileContent.Length);
                 }
@@ -128,6 +180,18 @@ namespace Server
             {
                 _listener.Stop();
                 Console.WriteLine("Server stopped.");
+            }
+        }
+
+        /// <summary>
+        /// Forces a page refresh for all clients.
+        /// </summary>
+        public void ForceRefresh()
+        {
+            Console.WriteLine("Triggering page refresh for all clients.");
+            foreach (var socket in _allSockets.ToList())
+            {
+                socket.Send("refresh");
             }
         }
     }
