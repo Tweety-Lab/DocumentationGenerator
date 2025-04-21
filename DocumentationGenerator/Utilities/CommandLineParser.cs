@@ -1,12 +1,5 @@
 ﻿namespace DocumentationGenerator.FileUtilities;
 
-public class CommandLineOptions
-{
-    public string? JsonFilePath { get; set; }
-    public string OutputPath { get; set; } = "Build";
-    public int? HostPort { get; set; }
-}
-
 public static class CommandLineParser
 {
     public static CommandLineOptions ParseArguments(string[] args)
