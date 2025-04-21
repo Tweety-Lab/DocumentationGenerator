@@ -1,6 +1,7 @@
 <!-- This is an example of how a HTML Template works.
  the compiler replaces {{HTML_DOCUMENTATION}} with the actual HTML generated for the Documentation Page.
- the compiler replaces {{DOCUMENTATION_TITLE}} with the name of the Documentation Page. -->
+ the compiler replaces {{DOCUMENTATION_TITLE}} with the name of the Documentation Page.\
+ the compiler replaces {{NAVBAR}} with the HTML generated from the NavBar -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,6 +15,7 @@
     <link rel="stylesheet" href="page_styles.css" />
   </head>
   <body>
+    {{NAVBAR}}
     {{HTML_DOCUMENTATION}}
   </body>
 </html>

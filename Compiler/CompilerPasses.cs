@@ -18,8 +18,7 @@ namespace DocumentationGenerator.Compilation
     {
         public void Execute(Page page)
         {
-            // Convert Markdown to HTML
-            page.HTMLContents = MarkdownUtil.ConvertMarkdownToHTML(page.MarkdownContents);
+            page.HTMLDocumentationContents = MarkdownUtil.ConvertMarkdownToHTML(page.MarkdownContents);
         }
     }
 
@@ -34,8 +33,7 @@ namespace DocumentationGenerator.Compilation
             string compiledNavBar = HTMLUtil.ReplaceKeywordOutsideComments(
                 HTMLTemplates.NavBarTemplate, "{{NAVBAR_CONTENT}}", navbarHTML);
 
-            page.HTMLContents = HTMLUtil.ReplaceKeywordOutsideComments(
-                page.HTMLContents, "{{NAVBAR}}", compiledNavBar);
+            page.HTMLNavBarContents = compiledNavBar;
         }
     }
 
@@ -46,13 +44,12 @@ namespace DocumentationGenerator.Compilation
     {
         public void Execute(Page page)
         {
-            // Prepare the template with NavBar
             string compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
-                HTMLTemplates.PageTemplate, "{{NAVBAR}}", page.HTMLContents);
+                HTMLTemplates.PageTemplate, "{{NAVBAR}}", page.HTMLNavBarContents);
 
-            // Replace the rest of the placeholders
             compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
-                compiledHTML, "{{HTML_DOCUMENTATION}}", page.HTMLContents);
+                compiledHTML, "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents);
+
             compiledHTML = HTMLUtil.ReplaceKeywordOutsideComments(
                 compiledHTML, "{{DOCUMENTATION_TITLE}}", page.Title);
 

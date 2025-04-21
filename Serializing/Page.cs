@@ -24,11 +24,14 @@ namespace DocumentationGenerator.Serializing
 
         public string Title { get; set; }
         public string MarkdownContents { get; set; }
+
+        // HTML Content
+        public string HTMLDocumentationContents { get; set; }
+        public string HTMLNavBarContents { get; set; }
         public string HTMLContents { get; set; }
 
         public void WriteToFile(string path)
         {
-            // Ensure the directory exists
             string? directory = Path.GetDirectoryName(path);
             if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
             {
@@ -41,13 +44,13 @@ namespace DocumentationGenerator.Serializing
             File.WriteAllText(path, HTMLContents);
         }
 
+
         /// <summary>
         /// Compile the page.
         /// </summary>
         public void CompilePage()
         {
-            // Initialize HTML contents with markdown
-            HTMLContents ??= MarkdownContents;
+            HTMLDocumentationContents ??= MarkdownContents;
 
             // Apply compiler passes
             foreach (var pass in _compilerPasses)
@@ -56,7 +59,6 @@ namespace DocumentationGenerator.Serializing
             }
         }
 
-        // Allow registering compiler passes
         public static void RegisterCompilerPass(ICompilerPass pass)
         {
             _compilerPasses.Add(pass);
