@@ -2,7 +2,7 @@
 using System.Text;
 using Fleck;
 
-namespace Server
+namespace Host
 {
     /// <summary>
     /// Manages the lifecycle of a local web-server.

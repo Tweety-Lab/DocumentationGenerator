@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace Server.HotReloading
+namespace Host.HotReloading
 {
     public class HotReload : IDisposable
     {

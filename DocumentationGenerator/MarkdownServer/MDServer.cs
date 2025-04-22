@@ -1,6 +1,6 @@
 ﻿using DocumentationGenerator.Builder;
-using Server;
-using Server.HotReloading;
+using Host;
+using Host.HotReloading;
 
 namespace DocumentationGenerator.MarkdownServer;
 
