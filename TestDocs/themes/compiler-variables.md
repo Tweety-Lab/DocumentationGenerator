@@ -9,7 +9,7 @@ Compiler Variables allow you to create flexible theme templates by inserting dyn
 | {{NAVBAR_CONTENT}} | A Unordered List that includes all the navbar Titles and pages.  |
 
 ## Examples
-```HTML
+```HTML 
 <body>
     <div class="navbar">
         {{NAVBAR_CONTENT}}
