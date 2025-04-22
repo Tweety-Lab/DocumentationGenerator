@@ -8,12 +8,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Fleck" Version="1.2.0" />
 		<PackageReference Include="Markdig" Version="0.41.0" />
 		<PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\Server\Host.csproj" />
 	</ItemGroup>
 
 </Project>
