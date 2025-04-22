@@ -9,7 +9,7 @@ namespace DocumentationGenerator.Modes.Host.HotReloading
         private readonly FileSystemWatcher watcher;
         private readonly List<Action<string>> onFileChangedCallbacks = new();
 
-        public HotReload(string directoryPath, string filter = "*.*", bool includeSubdirectories = false)
+        public HotReload(string directoryPath, string filter = "*.*", bool includeSubdirectories = true)
         {
             if (!Directory.Exists(directoryPath))
                 throw new DirectoryNotFoundException($"Directory not found: {directoryPath}");
