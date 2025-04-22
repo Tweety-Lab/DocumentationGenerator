@@ -1,7 +1,9 @@
 ﻿using ApplicationModes;
 using DocumentationGenerator.Builder;
 using DocumentationGenerator.MarkdownServer;
+using DocumentationGenerator.Serializing;
 using DocumentationGenerator.Utilities;
+using DocumentationGenerator.Utilities.Themes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +16,14 @@ namespace DocumentationGenerator.Modes.Build
     {
         public void Start(CommandLineOptions options)
         {
-            if (options.JsonFilePath == null)
+            if (options.Directory == null)
             {
                 Console.WriteLine("Error: No JSON file path provided.");
                 return;
             }
 
             // Builder
-            Program.Builder = new DocumentationBuilder(options.JsonFilePath, options.OutputPath);
+            Program.Builder = new DocumentationBuilder(options.Directory + "/navbar.json", options.OutputPath);
             Program.Builder.BuildAllPages();
         }
     }

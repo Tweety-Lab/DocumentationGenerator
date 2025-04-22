@@ -52,7 +52,7 @@ public static class CommandLineParser
                     throw new ArgumentException("Missing markdown directory path.");
                 }
 
-                options.JsonFilePath = args[0] + "/navbar.json";
+                options.Directory = args[0];
 
                 for (var i = 1; i < args.Length; i++)
                 {

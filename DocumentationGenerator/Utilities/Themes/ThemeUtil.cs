@@ -1,10 +1,7 @@
 ﻿using DocumentationGenerator.Themes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.IO;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace DocumentationGenerator.Utilities.Themes;
 
@@ -12,20 +9,26 @@ public static class ThemeUtil
 {
     /// <summary>
     /// Deserializes a theme.json file into a Theme object.
+    /// Resolves relative paths against the executable's directory.
     /// </summary>
     public static Theme LoadTheme(string themePath)
     {
         try
         {
-            Console.WriteLine($"Loading With Theme: {themePath}");
+            string baseDir = AppContext.BaseDirectory;
+            string fullPath = Path.IsPathRooted(themePath)
+                ? themePath
+                : Path.GetFullPath(Path.Combine(baseDir, themePath));
+
+            Console.WriteLine($"Loading Theme from: {fullPath}");
 
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-            string json = File.ReadAllText(themePath);
+            string json = File.ReadAllText(fullPath);
             Theme theme = JsonSerializer.Deserialize<Theme>(json, options);
 
             // Initialize Paths if null
             theme.Paths ??= new ThemePaths();
-            theme.Paths.Root = Path.GetDirectoryName(themePath);
+            theme.Paths.Root = Path.GetDirectoryName(fullPath);
 
             Console.WriteLine($"Loaded Theme Path - Root: {theme.Paths.Root}");
             Console.WriteLine($"Loaded Theme Path - Page: {theme.Paths.Page}");
@@ -36,7 +39,7 @@ public static class ThemeUtil
         catch (Exception ex)
         {
             Console.WriteLine($"Failed to load Theme: {ex}");
-            return null;
+            throw;
         }
     }
 }

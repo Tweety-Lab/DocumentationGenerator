@@ -3,7 +3,7 @@
 public static class FileUtil
 {
     /// <summary>
-    ///     Safetly reads the contents of a text file.
+    /// Safetly reads the contents of a text file.
     /// </summary>
     public static string SafeReadAllText(string path, int retries = 5, int delay = 200)
     {
@@ -22,7 +22,7 @@ public static class FileUtil
     }
 
     /// <summary>
-    ///     Safetly writes the contents of a text file.
+    /// Safetly writes the contents of a text file.
     /// </summary>
     public static void SafeWriteAllText(string path, string contents, int retries = 5, int delay = 200)
     {

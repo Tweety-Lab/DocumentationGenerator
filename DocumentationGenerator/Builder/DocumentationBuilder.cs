@@ -23,7 +23,10 @@ public class DocumentationBuilder
         var configJson = File.ReadAllText(configPath);
         var config = System.Text.Json.JsonSerializer.Deserialize<Config>(configJson);
 
-        HTMLTemplates.Theme = ThemeUtil.LoadTheme(config.Theme);
+        // Resolve theme path relative to config location
+        var themeFullPath = Path.GetFullPath(Path.Combine(JsonDirectory, config.Theme));
+
+        HTMLTemplates.Theme = ThemeUtil.LoadTheme(themeFullPath);
 
         // Ensure output directory exists
         Directory.CreateDirectory(OutputPath);
@@ -36,8 +39,8 @@ public class DocumentationBuilder
     public void BuildAllPages()
     {
         foreach (var title in NavBar.Titles)
-        foreach (var page in title.Pages)
-            ProcessPage(page);
+            foreach (var page in title.Pages)
+                ProcessPage(page);
 
         Console.WriteLine("Documentation generation complete!");
     }
