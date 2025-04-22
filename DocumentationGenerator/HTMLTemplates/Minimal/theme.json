@@ -1,0 +1,8 @@
+{
+  "name": "Minimal",
+  "description": "Ultra lightweight minimal Theme.",
+  "paths": {
+    "Page": "page.html",
+    "NavBar": "navbar.html"
+  }
+}
