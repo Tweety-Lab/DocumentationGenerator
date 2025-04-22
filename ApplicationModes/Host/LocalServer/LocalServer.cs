@@ -2,7 +2,7 @@
 using System.Text;
 using Fleck;
 
-namespace Host
+namespace ApplicationModes.Host.LocalServer
 {
     /// <summary>
     /// Manages the lifecycle of a local web-server.
@@ -156,7 +156,8 @@ namespace Host
                     context.Response.ContentLength64 = notFound.Length;
                     context.Response.OutputStream.Write(notFound, 0, notFound.Length);
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 // Handle exceptions
                 Console.WriteLine($"Error processing request: {ex.Message}");
@@ -166,7 +167,8 @@ namespace Host
 
                 context.Response.ContentLength64 = errorMsg.Length;
                 context.Response.OutputStream.Write(errorMsg, 0, errorMsg.Length);
-            } finally
+            }
+            finally
             {
                 // Close the response
                 context.Response.Close();
