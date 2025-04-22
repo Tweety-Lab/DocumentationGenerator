@@ -1,4 +1,4 @@
-﻿using DocumentationGenerator.FileUtilities.Markdown;
+﻿using DocumentationGenerator.Utilities.Markdown;
 using DocumentationGenerator.Serializing;
 
 namespace DocumentationGenerator.Compilation.Passes;

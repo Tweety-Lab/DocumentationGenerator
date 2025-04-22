@@ -1,4 +1,4 @@
-﻿namespace DocumentationGenerator.FileUtilities.HTML;
+﻿namespace DocumentationGenerator.Utilities.HTML;
 
 public static class HTMLTemplates
 {

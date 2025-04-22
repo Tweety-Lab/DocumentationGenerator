@@ -1,4 +1,4 @@
-﻿using DocumentationGenerator.FileUtilities.HTML;
+﻿using DocumentationGenerator.Utilities.HTML;
 using DocumentationGenerator.Serializing;
 
 namespace DocumentationGenerator.Compilation.Passes;

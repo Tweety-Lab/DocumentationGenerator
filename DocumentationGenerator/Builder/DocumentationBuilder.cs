@@ -1,5 +1,5 @@
-﻿using DocumentationGenerator.FileUtilities.HTML;
-using DocumentationGenerator.FileUtilities.Markdown;
+﻿using DocumentationGenerator.Utilities.HTML;
+using DocumentationGenerator.Utilities.Markdown;
 using DocumentationGenerator.Serializing;
 using DocumentationGenerator.Utilities;
 

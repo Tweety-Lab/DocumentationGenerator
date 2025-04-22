@@ -1,5 +1,5 @@
 ﻿using DocumentationGenerator.Builder;
-using DocumentationGenerator.FileUtilities;
+using DocumentationGenerator.Utilities;
 using DocumentationGenerator.MarkdownServer;
 
 namespace DocumentationGenerator;

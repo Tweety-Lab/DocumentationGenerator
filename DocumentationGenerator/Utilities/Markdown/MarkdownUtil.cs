@@ -1,7 +1,7 @@
 ﻿using System.Text.RegularExpressions;
 using Markdig;
 
-namespace DocumentationGenerator.FileUtilities.Markdown;
+namespace DocumentationGenerator.Utilities.Markdown;
 
 public static class MarkdownUtil
 {

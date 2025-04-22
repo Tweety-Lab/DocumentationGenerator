@@ -1,4 +1,4 @@
-﻿namespace DocumentationGenerator.FileUtilities;
+﻿namespace DocumentationGenerator.Utilities;
 
 public static class CommandLineParser
 {
