@@ -34,9 +34,9 @@ public class DocumentationBuilder
         var config = System.Text.Json.JsonSerializer.Deserialize<Config>(configJson);
 
         // Resolve theme path using the mapped theme key
-        if (!ThemeMap.TryGetValue(config.Theme, out var relativeThemePath))
+        if (!ThemeMap.TryGetValue(config.Theme.ToLowerInvariant(), out var relativeThemePath))
         {
-            throw new InvalidOperationException($"Unknown theme key: '{config.Theme}'. Available themes: {string.Join(", ", ThemeMap.Keys)}");
+            throw new InvalidOperationException($"Unknown theme: '{config.Theme}'. Available themes: {string.Join(", ", ThemeMap.Keys)}");
         }
 
         var exeDirectory = AppContext.BaseDirectory;
