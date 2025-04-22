@@ -9,6 +9,16 @@ namespace DocumentationGenerator.Builder;
 
 public class DocumentationBuilder
 {
+    public NavBar NavBar { get; }
+    public string OutputPath { get; }
+    public string JsonDirectory { get; }
+
+    // Theme map: maps config keys to theme JSON paths relative to the executable
+    private static readonly Dictionary<string, string> ThemeMap = new()
+    {
+        { "minimal", "../../../HTMLTemplates/Minimal/theme.json" },
+    };
+
     public DocumentationBuilder(string jsonFilePath, string outputPath)
     {
         OutputPath = outputPath;
@@ -23,18 +33,20 @@ public class DocumentationBuilder
         var configJson = File.ReadAllText(configPath);
         var config = System.Text.Json.JsonSerializer.Deserialize<Config>(configJson);
 
-        // Resolve theme path relative to config location
-        var themeFullPath = Path.GetFullPath(Path.Combine(JsonDirectory, config.Theme));
+        // Resolve theme path using the mapped theme key
+        if (!ThemeMap.TryGetValue(config.Theme, out var relativeThemePath))
+        {
+            throw new InvalidOperationException($"Unknown theme key: '{config.Theme}'. Available themes: {string.Join(", ", ThemeMap.Keys)}");
+        }
+
+        var exeDirectory = AppContext.BaseDirectory;
+        var themeFullPath = Path.Combine(exeDirectory, relativeThemePath);
 
         HTMLTemplates.Theme = ThemeUtil.LoadTheme(themeFullPath);
 
         // Ensure output directory exists
         Directory.CreateDirectory(OutputPath);
     }
-
-    public NavBar NavBar { get; }
-    public string OutputPath { get; }
-    public string JsonDirectory { get; }
 
     public void BuildAllPages()
     {

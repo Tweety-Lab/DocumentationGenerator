@@ -2,7 +2,7 @@
   "profiles": {
     "DocumentationGenerator": {
       "commandName": "Project",
-      "commandLineArgs": "Build \"D:\\DocumentationGenerator\\DocumentationGenerator\\TestDocs\"",
+      "commandLineArgs": "host 9999",
       "workingDirectory": "D:\\DocumentationGenerator\\DocumentationGenerator\\TestDocs"
     }
   }
