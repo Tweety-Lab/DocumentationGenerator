@@ -3,15 +3,19 @@
     --content-background: #FAF9F6;
     --inline-code-color: #e74c3c;
     --p-font-size: 1.6rem;
+    --nav-group-title-size: 2.2rem;
+    --nav-page-link-size: 1.5rem;
     --nav-bg-colour: #1b1b1b;
     --nav-text-colour: #fff;
-    --nav-bottom-line-colour: #ccc;
+    --nav-bottom-line-colour: rgba(204, 204, 204, .6);
+    --nav-bottom-line-width: 60%;
     --nav-item-hover-colour: #d3d3d3;
 }
 
 .content {
     width: 100%;
-    background-color: var(--content-background)
+    background-color: var(--content-background);
+    padding-left: 4rem;
 }
 
 img {
@@ -120,48 +124,46 @@ p {
 
 
 /* NAV BAR */
-.nav-bar {
-    /* position: sticky; */
+.nav {
     background-color: var(--nav-bg-colour);
     color: var(--nav-text-colour);
-    box-sizing: border-box;
-    /* min-width: 22rem; */
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    text-align: center;
 }
 
-.nav-bar ul {
-    list-style-type: none;
+.nav__heading {
+    font-size: 2.2rem;
+    margin-top: 1.3rem;
+    padding-left: 2rem;
+}
+.nav__main-list {
+    width: 100%;
+    margin: 0;
     padding: 0;
 }
 
-.nav__list {
+.nav__main-list:last-child {
+    margin-bottom: 2rem;
+}
+
+.nav__title-item {
+    font-size: var(--nav-group-title-size);
+    text-align: center;
+    margin: 2rem auto 0;
     border-bottom: 1px solid var(--nav-bottom-line-colour);
-    width: 100%;
-    margin: 0;
+    width: var(--nav-bottom-line-width);
+}
+
+.nav a {
+    color: var(--nav-text-colour);
+    text-decoration: none;
 }
 
 .nav__list-item {
-    margin-left: 1rem;
-    font-size: 1.5rem;
-    padding: .4rem 0;
-    transition: all .15s;
-}
-
-.nav__title {
-    font-size: 2rem;
-    margin-top: 2rem;
-}
-
-.nav__logo {
-    font-size: 1.5rem;
-    height: 100%;
-    margin: auto 0.5rem;
-}
-.nav-bar a {
-    color: var(--nav-text-colour);
-    text-decoration: none;
+    transform-origin: left;
+    font-size: var(--nav-page-link-size);
 }
 
 .nav__list-item a:hover {
@@ -177,19 +179,38 @@ p {
     fill: #fff;
     width: 40px;
     height: 40px;
+    --menu-margin: 1rem;
+    margin-top: var(--menu-margin);
+    margin-right: var(--menu-margin);
+}
+
+.list {
+    list-style-type: none;
+    padding: 0;
 }
 
 @media screen and (min-width: 768px) {
-    .nav-bar {
+    .nav {
         height: 100vh;
-    /* padding: 0 3rem 3rem; 0 top padding, 3rem right and left, 3rem bottom */
+        display: block;
+    }
 
+    .nav__menu-icon {
+        display: none;
+    }
+
+    .nav__heading {
+        font-size: 1.9rem;
+        padding: 0 1.5rem;
     }
 }
 
-.menu-and-list {
-    width: 100%;
+@media screen and (min-width: 1410px) {
+    .content {
+        padding-left: 0;
+    }
 }
+
 
 /* Collapsibles - for NavBar */
 .collapsible__content {
