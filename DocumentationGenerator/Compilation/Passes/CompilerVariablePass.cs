@@ -14,8 +14,10 @@ public class CompilerVariablePass : ICompilerPass
         var replacements = new Dictionary<string, string>
         {
             { "{{NAVBAR}}", page.HTMLNavBarContents },
-            { "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents },
-            { "{{DOCUMENTATION_TITLE}}", page.Title }
+            { "{{DOCUMENTATION_TITLE}}", page.Title },
+
+            // This should be last
+            { "{{HTML_DOCUMENTATION}}", page.HTMLDocumentationContents }
         };
 
         // Replace compiler variables with their value
