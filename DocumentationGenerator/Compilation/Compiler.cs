@@ -5,13 +5,22 @@ namespace DocumentationGenerator.Compilation
 {
     public static class Compiler
     {
+        // All compiler passes to run
+        public static readonly List<ICompilerPass> CompilerPasses =
+        [
+            new MarkdownConversionPass(),
+            new NavBarGenerationPass(),
+            new CompilerVariablePass(),
+            new CommentRemovalPass()
+        ];
+
         /// <summary>
         /// Compiles a single page.
         /// </summary>
         /// <param name="page"></param>
         public static void CompilePage(Page page)
         {
-            foreach (ICompilerPass pass in Page.CompilerPasses)
+            foreach (ICompilerPass pass in CompilerPasses)
             {
                 pass.Execute(page);
             }

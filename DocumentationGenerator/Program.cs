@@ -1,5 +1,5 @@
 ﻿using DocumentationGenerator.Builder;
-using DocumentationGenerator.FileUtilities;
+using DocumentationGenerator.Utilities;
 using DocumentationGenerator.MarkdownServer;
 
 namespace DocumentationGenerator;
@@ -12,31 +12,46 @@ internal static class Program
     {
         try
         {
-            var options = CommandLineParser.ParseArguments(args);
+            var (mode, options) = CommandLineParser.ParseArguments(args);
 
-            // Local server
-            if (options.HostPort.HasValue)
+            switch (mode)
             {
-                Console.WriteLine($"Starting local server on port {options.HostPort.Value}...");
-                var server = new MDServer("", options.HostPort.Value);
-                server.OpenServer();
+                case ApplicationMode.Host:
+                    StartServer(options);
+                    break;
 
-                return;
+                case ApplicationMode.Build:
+                    BuildDocumentation(options);
+                    break;
+
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
-
-            if (options.JsonFilePath == null)
-            {
-                Console.WriteLine("Error: No JSON file path provided.");
-                return;
-            }
-
-            // Builder
-            Builder = new DocumentationBuilder(options.JsonFilePath, options.OutputPath);
-            Builder.BuildAllPages();
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error: {ex.Message}");
+            throw;
         }
+    }
+
+    private static void StartServer(CommandLineOptions options)
+    {
+        Console.WriteLine($"Starting local server on port {options.HostPort.Value}...");
+        var server = new MDServer("", options.HostPort.Value);
+        server.OpenServer();
+    }
+
+    private static void BuildDocumentation(CommandLineOptions options)
+    {
+        if (options.JsonFilePath == null)
+        {
+            Console.WriteLine("Error: No JSON file path provided.");
+            return;
+        }
+
+        // Builder
+        Builder = new DocumentationBuilder(options.JsonFilePath, options.OutputPath);
+        Builder.BuildAllPages();
     }
 }

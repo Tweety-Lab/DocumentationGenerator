@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace DocumentationGenerator.FileUtilities.HTML;
+namespace DocumentationGenerator.Utilities.HTML;
 
 public static class HTMLUtil
 {

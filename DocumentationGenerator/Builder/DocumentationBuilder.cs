@@ -1,5 +1,5 @@
-﻿using DocumentationGenerator.FileUtilities.HTML;
-using DocumentationGenerator.FileUtilities.Markdown;
+﻿using DocumentationGenerator.Utilities.HTML;
+using DocumentationGenerator.Utilities.Markdown;
 using DocumentationGenerator.Serializing;
 using DocumentationGenerator.Utilities;
 
@@ -64,7 +64,7 @@ public class DocumentationBuilder
 
         // Copy resources requested by HTML (css, js, etc)
         foreach (var resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
-            CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
+            CopyResource(resourcePath, HTMLTemplates.Theme.Paths.Root, Path.GetDirectoryName(fullOutputPath));
 
         Console.WriteLine($"Generated: {fullOutputPath}");
     }

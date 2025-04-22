@@ -9,15 +9,6 @@ namespace DocumentationGenerator.Serializing;
 /// </summary>
 public class Page
 {
-    // All compiler passes to run
-    public static readonly List<ICompilerPass> CompilerPasses =
-    [
-        new MarkdownConversionPass(),
-        new NavBarGenerationPass(),
-        new CompilerVariablePass(),
-        new CommentRemovalPass()
-    ];
-
     public string Title { get; set; }
     public string MarkdownContents { get; set; }
 

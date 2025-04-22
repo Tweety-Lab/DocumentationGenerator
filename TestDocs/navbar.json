@@ -1,10 +1,17 @@
 {
   "Titles": [
     {
-      "Title": "Testing",
+      "Title": "TESTING",
       "Pages": {
         "Index": "index.md",
-        "Test Page": "pages/test.md"
+        "Test Page": "testing/test.md",
+        "Elements": "testing/elements.md"
+      }
+    },
+    {
+      "Title": "CUSTOM THEMES",
+      "Pages": {
+        "Compiler Variables": "themes/compiler-variables.md"
       }
     }
   ]

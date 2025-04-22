@@ -1,17 +1,22 @@
 ﻿using System.Text.RegularExpressions;
 using Markdig;
 
-namespace DocumentationGenerator.FileUtilities.Markdown;
+namespace DocumentationGenerator.Utilities.Markdown;
 
 public static class MarkdownUtil
 {
     public static string ConvertMarkdownToHTML(string markdown)
     {
-        // Parse to markdown
-        var document = Markdig.Markdown.Parse(markdown);
+        // Create a Markdown pipeline
+        var pipeline = new MarkdownPipelineBuilder()
+    .UseAdvancedExtensions()
+    .Build();
+
+        // Parse with the pipeline
+        var document = Markdig.Markdown.Parse(markdown, pipeline);
 
         // Convert to HTML
-        var html = document.ToHtml();
+        var html = document.ToHtml(pipeline);
 
         // Return HTML
         return html;
