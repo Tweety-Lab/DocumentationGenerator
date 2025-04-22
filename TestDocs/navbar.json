@@ -9,11 +9,9 @@
       }
     },
     {
-      "Title": "NAVBAR FILLER",
+      "Title": "CUSTOM THEMES",
       "Pages": {
-        "Nothing": "filler.md",
-        "More Nothing": "filler.md",
-        "Something": "filler.md"
+        "Compiler Variables": "themes/compiler-variables.md"
       }
     }
   ]
