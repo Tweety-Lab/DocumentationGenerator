@@ -9,6 +9,7 @@ namespace DocumentationGenerator.Compilation
         public static readonly List<ICompilerPass> CompilerPasses =
         [
             new MarkdownConversionPass(),
+            new PageLinkerPass(),
             new NavBarGenerationPass(),
             new CompilerVariablePass(),
             new CommentRemovalPass()

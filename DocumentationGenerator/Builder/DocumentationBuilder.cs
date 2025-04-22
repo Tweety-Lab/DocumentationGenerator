@@ -82,13 +82,23 @@ public class DocumentationBuilder
         // Write HTML file
         newPage.WriteToFile(fullOutputPath);
 
-        // Copy resources requested by markdown (imgs, etc)
+        // Copy resources requested by markdown (skipping .md files)
         foreach (var resourcePath in MarkdownUtil.GetLinkedMDResourcePaths(newPage.MarkdownContents))
-            CopyResource(resourcePath, JsonDirectory, Path.GetDirectoryName(fullOutputPath));
+        {
+            if (!resourcePath.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+            {
+                CopyResource(resourcePath, JsonDirectory, Path.GetDirectoryName(fullOutputPath));
+            }
+        }
 
         // Copy resources requested by HTML (css, js, etc)
         foreach (var resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
-            CopyResource(resourcePath, HTMLTemplates.Theme.Paths.Root, Path.GetDirectoryName(fullOutputPath));
+        {
+            if (!resourcePath.EndsWith(".md", StringComparison.OrdinalIgnoreCase))
+            {
+                CopyResource(resourcePath, HTMLTemplates.Theme.Paths.Root, Path.GetDirectoryName(fullOutputPath));
+            }
+        }
 
         Console.WriteLine($"Generated: {fullOutputPath}");
     }
