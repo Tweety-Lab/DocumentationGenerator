@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace ApplicationModes;
 
-
 // Base Applictaion Mode
 public interface IApplicationMode
 {

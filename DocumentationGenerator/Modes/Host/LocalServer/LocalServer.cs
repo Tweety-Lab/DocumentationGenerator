@@ -2,7 +2,7 @@
 using System.Text;
 using Fleck;
 
-namespace ApplicationModes.Host.LocalServer
+namespace DocumentationGenerator.Modes.Host.LocalServer
 {
     /// <summary>
     /// Manages the lifecycle of a local web-server.
