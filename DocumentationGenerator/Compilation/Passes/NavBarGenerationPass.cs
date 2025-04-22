@@ -1,5 +1,6 @@
 ﻿using DocumentationGenerator.Utilities.HTML;
 using DocumentationGenerator.Serializing;
+using DocumentationGenerator.Utilities.NavBar;
 
 namespace DocumentationGenerator.Compilation.Passes;
 

@@ -2,6 +2,8 @@
 using DocumentationGenerator.Utilities.Markdown;
 using DocumentationGenerator.Serializing;
 using DocumentationGenerator.Utilities;
+using DocumentationGenerator.Utilities.NavBar;
+using DocumentationGenerator.Utilities.Themes;
 
 namespace DocumentationGenerator.Builder;
 
@@ -15,6 +17,13 @@ public class DocumentationBuilder
         // Load and deserialize navbar
         var jsonContent = File.ReadAllText(jsonFilePath);
         NavBar = NavBarUtil.Deserialize(jsonContent);
+
+        // Load and deserialize config
+        var configPath = Path.Combine(JsonDirectory, "config.json");
+        var configJson = File.ReadAllText(configPath);
+        var config = System.Text.Json.JsonSerializer.Deserialize<Config>(configJson);
+
+        HTMLTemplates.Theme = ThemeUtil.LoadTheme(config.Theme);
 
         // Ensure output directory exists
         Directory.CreateDirectory(OutputPath);

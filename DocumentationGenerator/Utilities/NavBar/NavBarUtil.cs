@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 
-namespace DocumentationGenerator.Serializing;
+namespace DocumentationGenerator.Utilities.NavBar;
 
 public static class NavBarUtil
 {
@@ -10,9 +10,9 @@ public static class NavBarUtil
     /// </summary>
     /// <param name="json"></param>
     /// <returns>Deserialized object</returns>
-    public static NavBar Deserialize(string json)
+    public static Serializing.NavBar Deserialize(string json)
     {
-        return JsonSerializer.Deserialize<NavBar>(json, new JsonSerializerOptions
+        return JsonSerializer.Deserialize<Serializing.NavBar>(json, new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true
         });
@@ -23,7 +23,7 @@ public static class NavBarUtil
     /// </summary>
     /// <param name="navbar"></param>
     /// <returns></returns>
-    public static string ConvertNavBarToHTML(NavBar navbar)
+    public static string ConvertNavBarToHTML(Serializing.NavBar navbar)
     {
         var html = new StringBuilder();
         html.Append("<ul>");
