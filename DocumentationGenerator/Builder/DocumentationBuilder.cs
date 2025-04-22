@@ -64,7 +64,7 @@ public class DocumentationBuilder
 
         // Copy resources requested by HTML (css, js, etc)
         foreach (var resourcePath in HTMLUtil.GetLinkedHTMLResourcePaths(newPage.HTMLContents))
-            CopyResource(resourcePath, HTMLTemplates.TemplatePath, Path.GetDirectoryName(fullOutputPath));
+            CopyResource(resourcePath, HTMLTemplates.Theme.Paths.Root, Path.GetDirectoryName(fullOutputPath));
 
         Console.WriteLine($"Generated: {fullOutputPath}");
     }

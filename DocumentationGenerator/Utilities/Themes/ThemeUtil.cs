@@ -10,16 +10,33 @@ namespace DocumentationGenerator.Utilities.Themes;
 
 public static class ThemeUtil
 {
-    // Convert theme.json into a Theme object
+    /// <summary>
+    /// Deserializes a theme.json file into a Theme object.
+    /// </summary>
     public static Theme LoadTheme(string themePath)
     {
-        // Create a Theme Object
-        Theme theme = new Theme();
+        try
+        {
+            Console.WriteLine($"Loading With Theme: {themePath}");
 
-        // Deserialize JSON
-        string json = File.ReadAllText(themePath);
-        theme = JsonSerializer.Deserialize<Theme>(json);
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            string json = File.ReadAllText(themePath);
+            Theme theme = JsonSerializer.Deserialize<Theme>(json, options);
 
-        return theme;
+            // Initialize Paths if null
+            theme.Paths ??= new ThemePaths();
+            theme.Paths.Root = Path.GetDirectoryName(themePath);
+
+            Console.WriteLine($"Loaded Theme Path - Root: {theme.Paths.Root}");
+            Console.WriteLine($"Loaded Theme Path - Page: {theme.Paths.Page}");
+            Console.WriteLine($"Loaded Theme Path - NavBar: {theme.Paths.NavBar}");
+
+            return theme;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to load Theme: {ex}");
+            return null;
+        }
     }
 }

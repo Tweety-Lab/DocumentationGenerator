@@ -1,8 +1,8 @@
 {
-    "name": "Default",
-    "description": "The default clean and modern theme.",
-    "paths": {
-      "Page": "test_page.html",
-      "Navbar": "test_navbar.html"
-    }
+  "name": "Default",
+  "description": "The default clean and modern theme.",
+  "paths": {
+    "Page": "test_page.html",
+    "NavBar": "test_navbar.html"
   }
+}

@@ -1,10 +1,11 @@
-﻿namespace DocumentationGenerator.Utilities.HTML;
+﻿using DocumentationGenerator.Themes;
+using DocumentationGenerator.Utilities.Themes;
+
+namespace DocumentationGenerator.Utilities.HTML;
 
 public static class HTMLTemplates
 {
-    public static string TemplatePath { get; set; } = Path.Combine(AppContext.BaseDirectory, "../../../HTMLTemplates/Default");
-    public static string PageTemplate { get; set; } = File.ReadAllText(Path.Combine(TemplatePath, "test_page.html"));
-
-    public static string NavBarTemplate { get; set; } =
-        File.ReadAllText(Path.Combine(TemplatePath, "test_navbar.html"));
+    public static Theme Theme { get; set; } = ThemeUtil.LoadTheme(Path.Combine(AppContext.BaseDirectory, "../../../HTMLTemplates/Default/theme.json"));
+    public static string PageTemplate { get; set; } = File.ReadAllText(Path.Combine(Theme.Paths.Root, Theme.Paths.Page));
+    public static string NavBarTemplate { get; set; } = File.ReadAllText(Path.Combine(Theme.Paths.Root, Theme.Paths.NavBar));
 }

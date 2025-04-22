@@ -15,11 +15,14 @@ public class Theme
     public string Name { get; set; }
     public string Description { get; set; }
 
+    // Paths to templates
     public ThemePaths Paths { get; set; }
 }
 
+// Paths to templates
 public class ThemePaths
 {
+    public string Root { get; set; }
     public string Page { get; set; }
     public string NavBar { get; set; }
 }
