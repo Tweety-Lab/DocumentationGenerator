@@ -22,6 +22,15 @@
             color: #1b1b1b;
         }
 
+        .current-page {
+            color: rgb(97, 97, 97);
+        }
+
+        .current-page span {
+            color: rgb(61, 61, 61);
+            font-weight: 500;
+        }
+
         /* Watermark */
         .watermark {
             margin-top: 100px;
@@ -37,6 +46,7 @@
     </style>
 </head>
 <body>
+    <p class="current-page">Site / <span>{{DOCUMENTATION_TITLE}}</span></p>
     {{NAVBAR}}
     {{HTML_DOCUMENTATION}}
 
