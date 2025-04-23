@@ -13,7 +13,6 @@
 }
 
 .content {
-    width: 100%;
     background-color: var(--content-background);
     padding-left: 4rem;
 }
@@ -25,7 +24,17 @@ img {
 
 .container {
     max-width: 1140px;
-    margin: auto;
+    margin: 0 auto 0 0;
+}
+
+@media screen and (max-width: 768px) {
+    .container {
+        margin: 0 auto;
+    }
+
+    .content {
+        padding-left: 2rem;
+    }
 }
 
 
@@ -148,10 +157,13 @@ p {
     margin-bottom: 2rem;
 }
 
+.sub-list:last-child {
+    padding-bottom: .5rem;
+}
+
 .nav__title-item { /* page links */
     font-size: var(--nav-group-title-size);
-    text-align: center;
-    margin: 2rem auto 0;
+    margin: 2rem 2rem 0;
     border-bottom: 1px solid var(--nav-bottom-line-colour);
     width: var(--nav-bottom-line-width);
 }
@@ -189,10 +201,17 @@ p {
     padding: 0;
 }
 
-@media screen and (min-width: 768px) {
+.sub-list {
+    margin-left: 2rem;
+}
+
+
+
+@media screen and (min-width: 769px) {
     .nav {
         height: 100vh;
         display: block;
+        text-align: left;
     }
 
     .nav__menu-icon {
@@ -205,9 +224,9 @@ p {
     }
 }
 
-@media screen and (min-width: 1410px) { /* Content was squished into the navbar so padding was added, theon screen sizes this want an issue its removed */
-    .content {
-        padding-left: 0;
+@media screen and (max-width: 768px) {
+    .nav__main-list {
+        display: flex;
     }
 }
 
