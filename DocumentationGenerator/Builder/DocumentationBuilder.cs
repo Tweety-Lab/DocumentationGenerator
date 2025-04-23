@@ -17,6 +17,7 @@ public class DocumentationBuilder
     private static readonly Dictionary<string, string> ThemeMap = new()
     {
         { "minimal", "../../../HTMLTemplates/Minimal/theme.json" },
+        { "default", "../../../HTMLTemplates/Default/theme.json" }
     };
 
     public DocumentationBuilder(string jsonFilePath, string outputPath)
