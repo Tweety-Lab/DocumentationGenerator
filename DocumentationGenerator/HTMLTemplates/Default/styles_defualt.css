@@ -199,12 +199,8 @@ p {
 .list {
     list-style-type: none;
     padding: 0;
-}
-
-.sub-list {
     margin-left: 2rem;
 }
-
 
 
 @media screen and (min-width: 769px) {
