@@ -12,7 +12,7 @@ the compiler replaces {{NAVBAR}} with the HTML generated from the NavBar -->
       src="https://kit.fontawesome.com/b35cf919df.js"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="page_styles.css" />
+    <link rel="stylesheet" href="styles_defualt.css" />
   </head>
   <body>
     <div class="grid grid--cols-2">
@@ -23,43 +23,11 @@ the compiler replaces {{NAVBAR}} with the HTML generated from the NavBar -->
         <svg class="nav__menu-icon">
           <use href="../Icons/sprite.svg#menu"></use>
         </svg>
-        <ul class="list nav__main-list collapsible__content">
-          <li class="nav__title-item">
-            Title 1
-            <ul class="list">
-              <li class="nav__list-item"><a href="">Page Link 1</a></li>
-              <li class="nav__list-item">Page Link 2</li>
-              <li class="nav__list-item">Page Link 3</li>
-              <li class="nav__list-item">Page Link 4</li>
-            </ul>
-          </li>
-          <li class="nav__title-item">
-            Title 2
-            <ul class="list">
-              <li class="nav__list-item">Page Link 1</li>
-              <li class="nav__list-item">Page Link 2</li>
-              <li class="nav__list-item">Page Link 3</li>
-              <li class="nav__list-item">Page Link 4</li>
-            </ul>
-          </li>
-        </ul>
+        {{NAVBAR}}
       </nav>
       <section class="content">
         <div class="container">
-          <header>
-            <h1>Example Page HTML Template</h1>
-            <p class="subtitle">
-              The C# API Provides easy-to-use methods of interacting with the
-              Developer Console.
-            </p>
-          </header>
-
-          <p>
-            The Console can be written to via the
-            <code class="inline-code inline-code--coloured"
-              >DeveloperConsole</code
-            >
-          </p>
+          {{HTML_DOCUMENTATION}}
         </div>
       </section>
     </div>

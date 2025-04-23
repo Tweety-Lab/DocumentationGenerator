@@ -19,22 +19,20 @@ public static class NavBarUtil
     }
 
     /// <summary>
-    ///     Convert a NavBar object to HTML
+    /// Convert a NavBar object to HTML
     /// </summary>
-    /// <param name="navbar"></param>
-    /// <returns></returns>
     public static string ConvertNavBarToHTML(Serializing.NavBar navbar)
     {
         var html = new StringBuilder();
-        html.Append("<ul>");
+        html.Append("<ul class=\"list nav__main-list collapsible__content\">");
 
         foreach (var title in navbar.Titles)
         {
             // Start title list item
-            html.Append($"<li class=\"nav__title\">{title.Title}");
+            html.Append($"<li class=\"nav__title-item\">{title.Title}");
 
             // Start nested pages list
-            html.Append("<ul class=\"nav__list\">");
+            html.Append("<ul class=\"list\">");
 
             // Add pages as nested list items
             foreach (var page in title.Pages)
@@ -55,4 +53,5 @@ public static class NavBarUtil
         html.Append("</ul>");
         return html.ToString();
     }
+
 }
