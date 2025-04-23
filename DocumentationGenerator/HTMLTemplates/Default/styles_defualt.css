@@ -1,4 +1,4 @@
-:root {
+:root { /* Variable can be changed, only change values, if changing name use F2 or replace */
     --body-text-colour: #333;
     --content-background: #FAF9F6;
     --inline-code-color: #e74c3c;
@@ -124,7 +124,7 @@ p {
 
 
 /* NAV BAR */
-.nav {
+.nav { /* Group of all nav elements*/
     background-color: var(--nav-bg-colour);
     color: var(--nav-text-colour);
     display: flex;
@@ -133,7 +133,7 @@ p {
     text-align: center;
 }
 
-.nav__heading {
+.nav__heading { /* DOCUMENT TITLE */
     font-size: 2.2rem;
     margin-top: 1.3rem;
     padding-left: 2rem;
@@ -144,11 +144,11 @@ p {
     padding: 0;
 }
 
-.nav__main-list:last-child {
+.nav__main-list:last-child { /* the main navbar <ul> */
     margin-bottom: 2rem;
 }
 
-.nav__title-item {
+.nav__title-item { /* page links */
     font-size: var(--nav-group-title-size);
     text-align: center;
     margin: 2rem auto 0;
@@ -205,7 +205,7 @@ p {
     }
 }
 
-@media screen and (min-width: 1410px) {
+@media screen and (min-width: 1410px) { /* Content was squished into the navbar so padding was added, theon screen sizes this want an issue its removed */
     .content {
         padding-left: 0;
     }
@@ -230,4 +230,37 @@ p {
 .collapsible--expanded .collapsible__content {
     opacity: 1;
     max-height: 100vh;
+}
+
+/* Watermark */
+.watermark {
+    margin-top: 100px;
+    color: #dbdbdb;
+    font-size: 1.5rem;
+    border-top: 1px solid #e9e9e9; /* Horizontal line */
+    padding-top: 0px;
+    width: 100%;
+}
+
+.watermark a {
+    color: #9eb1c4;
+}
+
+table {
+    border-collapse: collapse;
+    margin: 1em 0;
+    font-size: 0.95em;
+    width: auto; /* Make table as wide as its content */
+    max-width: 100%;
+}
+
+table thead {
+    background-color: #f6f8fa;
+}
+
+table th,
+table td {
+    border: 1px solid #dfe2e5;
+    padding: 8px 12px;
+    text-align: left;
 }
