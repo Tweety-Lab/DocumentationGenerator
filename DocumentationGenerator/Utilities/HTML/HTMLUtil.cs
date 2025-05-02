@@ -7,25 +7,43 @@ public static class HTMLUtil
     /// <summary>
     ///     Get all linked resource paths in a HTML file.
     /// </summary>
+    /// <summary>
+    ///     Get all linked resource paths (stylesheets, scripts, images) in an HTML file.
+    /// </summary>
     public static List<string> GetLinkedHTMLResourcePaths(string html)
     {
-        // Find all style sheet links in the HTML file
+        // Find all stylesheet links
         var styleSheetLinks = new List<string>();
 
-        // Find all script links in the HTML file
+        // Find all script links
         var scriptLinks = new List<string>();
 
-        // Regex pattern to match style sheet links: <link rel="stylesheet" href="path" />
-        var styleSheetMatches = Regex.Matches(html, @"<link[^>]+rel=""stylesheet""[^>]+href=""(.*?)""[^>]*>");
+        // Find all image sources
+        var imageLinks = new List<string>();
 
-        // Regex pattern to match script links: <script src="path"></script>
-        var scriptMatches = Regex.Matches(html, @"<script[^>]+src=""(.*?)""[^>]*>");
+        // Regex pattern to match <link rel="stylesheet" href="...">
+        var styleSheetMatches = Regex.Matches(html, @"<link[^>]+rel\s*=\s*[""']stylesheet[""'][^>]+href\s*=\s*[""'](.*?)[""'][^>]*>", RegexOptions.IgnoreCase);
 
-        foreach (Match match in styleSheetMatches) styleSheetLinks.Add(match.Groups[1].Value);
+        // Regex pattern to match <script src="...">
+        var scriptMatches = Regex.Matches(html, @"<script[^>]+src\s*=\s*[""'](.*?)[""'][^>]*>", RegexOptions.IgnoreCase);
 
-        foreach (Match match in scriptMatches) scriptLinks.Add(match.Groups[1].Value);
+        // Regex pattern to match <img src="...">
+        var imageMatches = Regex.Matches(html, @"<img[^>]+src\s*=\s*[""'](.*?)[""'][^>]*>", RegexOptions.IgnoreCase);
 
-        return styleSheetLinks.Concat(scriptLinks).ToList();
+        foreach (Match match in styleSheetMatches)
+            styleSheetLinks.Add(match.Groups[1].Value);
+
+        foreach (Match match in scriptMatches)
+            scriptLinks.Add(match.Groups[1].Value);
+
+        foreach (Match match in imageMatches)
+            imageLinks.Add(match.Groups[1].Value);
+
+        // Combine all resource paths
+        return styleSheetLinks
+            .Concat(scriptLinks)
+            .Concat(imageLinks)
+            .ToList();
     }
 
     /// <summary>
