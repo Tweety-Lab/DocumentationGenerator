@@ -6,7 +6,7 @@ Documentation Generator allows you to quickly turn Markdown files into a fully c
 ## ❔ Why Documentation Generator?
 Documentation Generator is built to be lightweight and developer-first. Every page is created from a template that can be easily modified, replaced or left as-is to take advantage of small file sizes and fast perfomance using a clean built-in theme.
 
-The Development experience is designed to be as simple and easy as possible. There's tools to preview what your site will look like in real-time, documentation to guide you, and complete freedom under the MIT license to remove any watermarks, branding, or anything else you don’t need on your site.
+The Development experience is designed to be as simple and easy as possible. There's tools to preview what your site will look like in real-time, easy building, and complete freedom under the MIT license to remove any watermarks, branding, or anything else you don’t need on your site.
 
 ## 📝 Getting Started
 To begin creating a Documentation Generator site, download the setup from the `Releases` section. After installing Documentation Generator, create a new folder to hold your Markdown files and add a `navbar.json` file. This file controls how pages in your documentation ara accessed through the Navigation Bar.
