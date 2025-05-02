@@ -11,7 +11,7 @@ The Development experience is designed to be as simple and easy as possible. The
 ## Getting Started
 To begin creating a Documentation Generator site, download the setup from the `Releases` section. After installing Documentation Generator, create a new folder to hold your Markdown files and add a `navbar.json` file. This file controls how pages in your documentation ara accessed through the Navigation Bar.
 
-This is an example of a valid `navbar.json`
+This is an example of a valid `navbar.json`:
 ```JSON
 {
   "Titles": [
@@ -32,8 +32,14 @@ This is an example of a valid `navbar.json`
   ]
 }
 ```
-This makes 2 titles, 'Fruits' and 'Vegetables', each with two pages linking to a .md file.
+This makes 2 titles, 'Fruits' and 'Vegetables', each with two pages linking to a .md file. After you have a working `navbar.json` create a `config.json` file, this file specifies extra details about how your site behaves.
 
+This is an example of a valid `config.json` that builds with the 'Minimal' Theme:
+```JSON
+{
+    "Theme": "Minimal"
+}
+```
 ## Building The Site
 Once you have a valid `navbar.json`, navigate to its location in your directory and run `DocumentationGenerator "./"` in the console. This will generate a `Build` folder containing all the .HTML, .CSS, .JS files, alongside any images or resources required for the site.
 
