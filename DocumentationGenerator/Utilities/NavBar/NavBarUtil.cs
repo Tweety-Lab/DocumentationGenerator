@@ -53,5 +53,4 @@ public static class NavBarUtil
         html.Append("</ul>");
         return html.ToString();
     }
-
 }
